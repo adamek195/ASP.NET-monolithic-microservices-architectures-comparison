@@ -6,6 +6,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MonolithicMultimedia.Data;
+using MonolithicMultimedia.Repositories.Interfaces;
+using MonolithicMultimedia.Repositories;
+using MonolithicMultimedia.Services.Interfaces;
+using MonolithicMultimedia.Services;
+using MonolithicMultimedia.Mappings;
+using MonolithicMultimedia.Entities;
 
 namespace MonolithicMultimedia
 {
@@ -23,6 +29,14 @@ namespace MonolithicMultimedia
         {
             services.AddDbContext<MonolithicMultimediaContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("MonolithicMultimediaCS")));
+
+            services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<MonolithicMultimediaContext>();
+
+            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
+
+            services.AddSingleton(AutoMapperConfig.Initialize());
 
             services.AddControllersWithViews();
         }
