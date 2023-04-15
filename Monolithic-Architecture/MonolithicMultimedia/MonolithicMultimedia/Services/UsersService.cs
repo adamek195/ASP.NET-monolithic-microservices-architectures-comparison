@@ -48,5 +48,19 @@ namespace MonolithicMultimedia.Services
 
             return _mapper.Map<UserDto>(newUser);
         }
+
+        public async Task<bool> LoginUser(LoginUserDto loginUserDto)
+        {
+            var user = await _userManager.FindByEmailAsync(loginUserDto.Email);
+            if (user == null)
+                return false;
+
+            var passwordCorrect = await _userManager.CheckPasswordAsync(user, loginUserDto.Password);
+            if (!passwordCorrect)
+                return false;
+
+
+            return true;
+        }
     }
 }

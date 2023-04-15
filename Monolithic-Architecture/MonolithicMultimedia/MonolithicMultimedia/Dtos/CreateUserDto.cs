@@ -17,7 +17,7 @@ namespace MonolithicMultimedia.Dtos
         [StringLength(100, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 1)]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Password of the user is required")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }

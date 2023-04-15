@@ -8,5 +8,7 @@ namespace MonolithicMultimedia.Services.Interfaces
         Task<UserDto> GetUser(string userId);
 
         Task<UserDto> CreateUser(CreateUserDto newUserDto);
+
+        Task<bool> LoginUser(LoginUserDto newUserDto);
     }
 }

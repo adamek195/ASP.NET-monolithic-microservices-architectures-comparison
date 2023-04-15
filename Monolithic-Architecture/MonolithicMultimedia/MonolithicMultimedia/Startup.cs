@@ -13,6 +13,7 @@ using MonolithicMultimedia.Services;
 using MonolithicMultimedia.Mappings;
 using MonolithicMultimedia.Entities;
 using MonolithicMultimedia.Exceptions.Filters;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MonolithicMultimedia
 {
@@ -25,7 +26,6 @@ namespace MonolithicMultimedia
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MonolithicMultimediaContext>(options =>
@@ -45,9 +45,16 @@ namespace MonolithicMultimedia
             });
 
             services.AddControllersWithViews();
+
+            services.AddAuthentication(
+                CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(option =>
+                {
+                    option.LoginPath = "/Account/Login";
+                    option.ExpireTimeSpan = System.TimeSpan.FromMinutes(20);
+                });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -57,7 +64,6 @@ namespace MonolithicMultimedia
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -65,13 +71,14 @@ namespace MonolithicMultimedia
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
             });
         }
     }
