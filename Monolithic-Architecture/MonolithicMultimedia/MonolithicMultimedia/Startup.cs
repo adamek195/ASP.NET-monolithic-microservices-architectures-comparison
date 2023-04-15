@@ -12,6 +12,7 @@ using MonolithicMultimedia.Services.Interfaces;
 using MonolithicMultimedia.Services;
 using MonolithicMultimedia.Mappings;
 using MonolithicMultimedia.Entities;
+using MonolithicMultimedia.Exceptions.Filters;
 
 namespace MonolithicMultimedia
 {
@@ -37,6 +38,11 @@ namespace MonolithicMultimedia
             services.AddTransient<IUsersRepository, UsersRepository>();
 
             services.AddSingleton(AutoMapperConfig.Initialize());
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(GlobalExceptionFilter));
+            });
 
             services.AddControllersWithViews();
         }

@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Registered";
+}
+
+<html>
+<head>
+    <title>Register information</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="@Url.Content("~/Scripts/Style.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <br />
+    <div class="jumbotron">
+        <h2>User: @ViewBag.userName</h2> <br />
+        <h2>Email: @ViewBag.email</h2> <br />
+        <h2>@ViewBag.userRegister</h2> <br />
+    </div>
+    <hr />
+</body>
+</html>
