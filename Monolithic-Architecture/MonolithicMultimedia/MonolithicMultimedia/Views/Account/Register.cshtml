@@ -45,9 +45,12 @@
                     @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Sign up" class="btn btn-success" />
+            <div class="form-group row">
+                <div class="col-sm-offset-2 col-sm-1">
+                    <input type="submit" value="Register" class="btn btn-success" />
+                </div>
+                <div class="col-sm-offset-2  col-sm-1">
+                    <a class="btn btn-success" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
                 </div>
             </div>
         </div>
