@@ -13,16 +13,27 @@
     </title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link href="@Url.Content("~/Scripts/Style.css")" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/css/register.css" />
 </head>
 <body>
     <br />
-    <div class="jumbotron">
-        <h2>User: @ViewBag.userName</h2> <br />
-        <h2>Email: @ViewBag.email</h2> <br />
-        <h2>@ViewBag.userRegister</h2> <br />
-    </div>
-    <hr />
+    <form>
+        <div class="register-wrapper">
+            <div class="register-inner">
+                <h2>User: @ViewBag.userName</h2> <br />
+                <h2>Email: @ViewBag.email</h2> <br />
+                <h2>@ViewBag.userRegister</h2> <br />
+                <hr />
+                <div class="form-group row">
+                    <div class="col-sm-3">
+                        <input type="submit" value="Register" class="btn btn-success" />
+                    </div>
+                    <div class="col-md-5">
+                        <a class="btn btn-success" asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </body>
 </html>
