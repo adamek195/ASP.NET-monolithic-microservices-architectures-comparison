@@ -32,6 +32,9 @@ namespace MonolithicMultimedia.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(CreateUserDto newUserDto)
         {
+            if (!ModelState.IsValid)
+                return View();
+
             var newUser = await _usersService.CreateUser(newUserDto);
 
             ViewBag.UserName = newUser.FirstName + " " + newUser.LastName;
@@ -57,6 +60,9 @@ namespace MonolithicMultimedia.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginUserDto loginUserDto)
         {
+            if (!ModelState.IsValid)
+                return View();
+
             if (await _usersService.LoginUser(loginUserDto))
             {
                 List<Claim> claims = new List<Claim>()
@@ -79,7 +85,7 @@ namespace MonolithicMultimedia.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ViewData["ErrorMessage"] = "User not found!";
+            ViewData["UserNotFoundMessage"] = "User not found!";
 
             return View();
         }
