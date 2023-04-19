@@ -82,3 +82,30 @@ h1, h2, h3, h4, h5, h6, label, span {
     font-weight: 500;
     font-family: 'Fira Sans', sans-serif;
 }
+
+.image-wrapper {
+    margin-top: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+    width: 40%;
+    height: 100%;
+}
+
+.image-inner {
+    background: #ffffff;
+    padding: 40px 55px 40px 55px;
+    border-radius: 15px;
+    transition: all .3s;
+}
+
+.image-icon {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+}

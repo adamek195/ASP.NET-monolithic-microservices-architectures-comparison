@@ -1,0 +1,45 @@
+﻿@model MonolithicMultimedia.Dtos.CommandImageDto
+
+@using (Html.BeginForm("Create", "Image", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <form>
+        <div class="image-wrapper">
+            <div class="image-inner">
+                <div class="form-group">
+                    <img class="image-icon" src="~/images/image.png" alt="image" />
+                    <hr />
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-15">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-15">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Hashtag, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-15">
+                        @Html.EditorFor(model => model.Hashtag, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Hashtag, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <div class="col-md-15">
+                        <input type="file" name="imageFile" className="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-15">
+                        <input type="submit" value="Add" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+}
