@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MonolithicMultimedia.Data;
 
@@ -11,9 +12,11 @@ using MonolithicMultimedia.Data;
 namespace MonolithicMultimedia.Migrations
 {
     [DbContext(typeof(MonolithicMultimediaContext))]
-    partial class MonolithicMultimediaContextModelSnapshot : ModelSnapshot
+    [Migration("20230419180235_AddHashtags")]
+    partial class AddHashtags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
