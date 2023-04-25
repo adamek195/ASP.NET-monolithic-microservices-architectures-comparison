@@ -14,6 +14,7 @@ using MonolithicMultimedia.Mappings;
 using MonolithicMultimedia.Entities;
 using MonolithicMultimedia.Exceptions.Filters;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using MonolithicMultimedia.Settings;
 
 namespace MonolithicMultimedia
 {
@@ -34,8 +35,14 @@ namespace MonolithicMultimedia
             services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<MonolithicMultimediaContext>();
 
+            var mediaRepositorySettings = new MediaRepositorySettings();
+            Configuration.GetSection("MediaRepositorySettings").Bind(mediaRepositorySettings);
+            services.AddTransient(x => mediaRepositorySettings);
+
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IUsersRepository, UsersRepository>();
+            services.AddTransient<IImagesRepository, ImagesRepository>();
+            services.AddTransient<IImagesService, ImagesService>();
 
             services.AddSingleton(AutoMapperConfig.Initialize());
 

@@ -14,9 +14,16 @@ namespace MonolithicMultimedia.Repositories
             _userManager = userManager;
         }
 
-        public async Task<User> GetUser(string userId)
+        public async Task<User> GetUserById(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
+
+            return user;
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
 
             return user;
         }

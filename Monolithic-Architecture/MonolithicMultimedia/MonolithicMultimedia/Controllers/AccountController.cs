@@ -65,9 +65,10 @@ namespace MonolithicMultimedia.Controllers
 
             if (await _usersService.LoginUser(loginUserDto))
             {
+                var user = await _usersService.GetUserByEmail(loginUserDto.Email);
                 List<Claim> claims = new List<Claim>()
                 {
-                    new Claim(ClaimTypes.NameIdentifier, loginUserDto.Email)
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
                 };
 
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,

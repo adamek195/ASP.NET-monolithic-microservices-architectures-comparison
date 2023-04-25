@@ -5,7 +5,6 @@ using MonolithicMultimedia.Entities;
 using MonolithicMultimedia.Exceptions;
 using MonolithicMultimedia.Repositories.Interfaces;
 using MonolithicMultimedia.Services.Interfaces;
-using System;
 using System.Threading.Tasks;
 
 namespace MonolithicMultimedia.Services
@@ -23,9 +22,19 @@ namespace MonolithicMultimedia.Services
             _userManager = userManager;
         }
 
-        public async Task<UserDto> GetUser(string userId)
+        public async Task<UserDto> GetUserById(string userId)
         {
-            var user = await _usersRepository.GetUser(userId);
+            var user = await _usersRepository.GetUserById(userId);
+
+            if (user == null)
+                throw new NotFoundException("User does not exist.");
+
+            return _mapper.Map<UserDto>(user);
+        }
+
+        public async Task<UserDto> GetUserByEmail(string email)
+        {
+            var user = await _usersRepository.GetUserByEmail(email);
 
             if (user == null)
                 throw new NotFoundException("User does not exist.");

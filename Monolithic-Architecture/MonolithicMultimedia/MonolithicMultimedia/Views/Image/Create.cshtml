@@ -34,6 +34,10 @@
                         <input type="file" name="imageFile" className="form-control" />
                     </div>
                 </div>
+                @if (ViewData["ImageError"] != null)
+                {
+                    <label class="text-danger">@ViewData["ImageError"]</label>
+                }
                 <div class="form-group">
                     <div class="col-md-15">
                         <input type="submit" value="Add" class="btn btn-success" />

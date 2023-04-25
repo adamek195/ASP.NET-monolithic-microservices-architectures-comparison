@@ -5,7 +5,9 @@ namespace MonolithicMultimedia.Repositories.Interfaces
 {
     public interface IUsersRepository
     {
-        Task<User> GetUser(string userId);
+        Task<User> GetUserById(string userId);
+
+        Task<User> GetUserByEmail(string userId);
 
         Task<User> AddUser(User newUser);
     }

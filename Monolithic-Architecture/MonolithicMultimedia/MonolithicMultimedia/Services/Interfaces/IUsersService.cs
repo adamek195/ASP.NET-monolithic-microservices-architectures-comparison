@@ -5,7 +5,9 @@ namespace MonolithicMultimedia.Services.Interfaces
 {
     public interface IUsersService
     {
-        Task<UserDto> GetUser(string userId);
+        Task<UserDto> GetUserById(string userId);
+
+        Task<UserDto> GetUserByEmail(string email);
 
         Task<UserDto> CreateUser(CreateUserDto newUserDto);
 
