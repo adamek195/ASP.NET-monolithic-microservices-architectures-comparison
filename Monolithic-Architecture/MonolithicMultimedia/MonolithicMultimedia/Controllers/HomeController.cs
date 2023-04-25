@@ -2,11 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using MonolithicMultimedia.Services.Interfaces;
 using System.Threading.Tasks;
 
 namespace MonolithicMultimedia.Controllers
@@ -14,16 +10,18 @@ namespace MonolithicMultimedia.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IImagesService _imagesService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IImagesService imagesService)
         {
-            _logger = logger;
+            _imagesService = imagesService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var images = await _imagesService.GetImages();
+
+            return View(images);
         }
 
         public async Task<IActionResult> LogOut()

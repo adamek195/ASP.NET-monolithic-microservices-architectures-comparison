@@ -1,0 +1,28 @@
+﻿@model MonolithicMultimedia.Dtos.ImageDto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="@Url.Content("~/css/details.css")" />
+}
+
+<div class="details-wrapper">
+    <div class="details-inner">
+        <h4 class="display-4">@Html.DisplayFor(model => model.Title)</h4>
+        <hr />
+        <div class="center">
+            <img src="~/Image/GetImage/@Html.DisplayFor(model => model.Id)" alt="@Html.DisplayFor(model => model.Title)" class="img-fluid">
+        </div>
+        <hr />
+        <dl class="row">
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-10">
+                @Html.DisplayFor(model => model.Hashtag)
+            </dt>
+        </dl>
+    </div>
+</div>

@@ -15,5 +15,7 @@ namespace MonolithicMultimedia.Dtos
         public string Path { get; set; }
 
         public string Hashtag { get; set; }
+
+        public DateTime CreationDate { get; set; }
     }
 }

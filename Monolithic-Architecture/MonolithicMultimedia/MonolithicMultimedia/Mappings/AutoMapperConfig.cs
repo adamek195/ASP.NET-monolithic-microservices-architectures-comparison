@@ -18,6 +18,7 @@ namespace MonolithicMultimedia.Mappings
                     .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => src.Password));
                 cfg.CreateMap<CommandImageDto, Image>();
                 cfg.CreateMap<ImageDto, Image>();
+                cfg.CreateMap<Image, ImageDto>();
             })
             .CreateMapper();
     }

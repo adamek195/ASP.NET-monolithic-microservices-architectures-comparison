@@ -2,11 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MonolithicMultimedia.Dtos;
-using MonolithicMultimedia.Exceptions;
 using MonolithicMultimedia.Helpers;
 using MonolithicMultimedia.Services.Interfaces;
-using System;
-using System.IO;
+using System.Threading.Tasks;
 
 namespace MonolithicMultimedia.Controllers
 {
@@ -25,8 +23,25 @@ namespace MonolithicMultimedia.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetImage(int id)
+        {
+            var imageDto = await _imagesService.GetImage(id);
+            byte[] imageBytes = System.IO.File.ReadAllBytes(imageDto.Path);
+
+            return File(imageBytes, "image/jpeg");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var imageDto = await _imagesService.GetImage(id);
+
+            return View(imageDto);
+        }
+
         [HttpPost]
-        public IActionResult Create(CommandImageDto imageDto, IFormFile imageFile)
+        public async Task<IActionResult> Create(CommandImageDto imageDto, IFormFile imageFile)
         {
             if (!ModelState.IsValid)
                 return View();
@@ -47,7 +62,7 @@ namespace MonolithicMultimedia.Controllers
 
             using (var stream = imageFile.OpenReadStream())
             {
-                _imagesService.CreateImage(imageDto, stream, User.GetId(), imageFile.FileName);
+                await _imagesService.CreateImage(imageDto, stream, User.GetId(), imageFile.FileName);
                 return RedirectToAction("Index", "Home");
             }
         }
