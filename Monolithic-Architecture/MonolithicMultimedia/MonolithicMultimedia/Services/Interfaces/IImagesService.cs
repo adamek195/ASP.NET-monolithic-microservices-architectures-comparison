@@ -18,6 +18,8 @@ namespace MonolithicMultimedia.Services.Interfaces
 
         Task CreateImage(CommandImageDto commandImageDto, Stream stream, string userId, string fileName);
 
-        Task DeleteImage(int imageId, string userId);
+        Task UpdateImage(int id, string userId, CommandImageDto commandImageDto);
+
+        Task DeleteImage(int id, string userId);
     }
 }

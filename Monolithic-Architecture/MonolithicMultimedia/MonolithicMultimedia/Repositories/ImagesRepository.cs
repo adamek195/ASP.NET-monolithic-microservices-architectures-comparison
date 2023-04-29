@@ -53,12 +53,25 @@ namespace MonolithicMultimedia.Repositories
             return images;
         }
 
-        public async Task<Image> AddImage(Image image)
+        public async Task AddImage(Image image)
         {
             _context.Images.Add(image);
-            await _context.SaveChangesAsync();
 
-            return image;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateImage(int id, Image image)
+        {
+            var imageToUpdate = await _context.Images.SingleOrDefaultAsync(x => x.Id == id && x.UserId == image.UserId);
+
+            if (imageToUpdate != null)
+            {
+                imageToUpdate.Title = image.Title;
+                imageToUpdate.Description = image.Description;
+                imageToUpdate.Hashtag = image.Hashtag;
+            }
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteImage(int imageId, Guid userId)

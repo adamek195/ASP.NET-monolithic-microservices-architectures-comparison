@@ -18,7 +18,9 @@ namespace MonolithicMultimedia.Repositories.Interfaces
 
         Task<List<Image>> GetUserImages(Guid userId);
 
-        public Task<Image> AddImage(Image image);
+        public Task AddImage(Image image);
+
+        public Task UpdateImage(int id, Image image);
 
         public Task DeleteImage(int id, Guid userId);
     }

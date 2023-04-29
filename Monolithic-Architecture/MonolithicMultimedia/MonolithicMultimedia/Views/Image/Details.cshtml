@@ -32,10 +32,13 @@
             {
                 @using (Html.BeginForm("Delete", "Image", new { Id = Model.Id }, FormMethod.Post))
                 {
-                    <dt class="col-sm-8">
+                    <dt class="col-sm-9">
                         <input type="submit" value="Delete" class="btn btn-danger" />
                     </dt>
                 }
+                <dt class="col-sm-9">
+                    @Html.ActionLink("Update", "Update", new { id = Model.Id }, new { @class = "btn btn-warning" })
+                </dt>
             }
         </dl>
     </div>

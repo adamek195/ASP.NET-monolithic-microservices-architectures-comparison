@@ -11,6 +11,7 @@ namespace MonolithicMultimedia.Dtos
 
         [Required(ErrorMessage = "Description is required.")]
         [StringLength(100, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 1)]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [HashtagValidation(ErrorMessage = "Hashtag does not contain #.")]

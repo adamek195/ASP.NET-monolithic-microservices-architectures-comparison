@@ -26,6 +26,11 @@ namespace MonolithicMultimedia.Controllers
             return View();
         }
 
+        public IActionResult Update(int id)
+        {
+            return View();
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetImage(int id)
         {
@@ -75,6 +80,17 @@ namespace MonolithicMultimedia.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(int id, CommandImageDto imageDto)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            await _imagesService.UpdateImage(id, User.GetId(), imageDto);
+
+            return RedirectToAction("Details", new { Id = id });
         }
 
         [HttpPost]
