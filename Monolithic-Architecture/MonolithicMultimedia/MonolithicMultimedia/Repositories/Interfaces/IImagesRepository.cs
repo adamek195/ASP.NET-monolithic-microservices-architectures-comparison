@@ -10,6 +10,8 @@ namespace MonolithicMultimedia.Repositories.Interfaces
     {
         Task<Image> GetImage(int id);
 
+        Task<Image> GetUserImage(int id, Guid userId);
+
         Task<List<Image>> GetImages();
 
         Task<List<Image>> GetImagesByHashtag(string hashtag);
@@ -17,5 +19,7 @@ namespace MonolithicMultimedia.Repositories.Interfaces
         Task<List<Image>> GetUserImages(Guid userId);
 
         public Task<Image> AddImage(Image image);
+
+        public Task DeleteImage(int id, Guid userId);
     }
 }

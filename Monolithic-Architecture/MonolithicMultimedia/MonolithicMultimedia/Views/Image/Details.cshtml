@@ -17,12 +17,26 @@
         </div>
         <hr />
         <dl class="row">
-            <dd class="col-sm-10">
+            <dd class="col-sm-4">
+                <h6>@ViewBag.userName: </h6>
+            </dd>
+            <dd class="col-sm-5">
                 @Html.DisplayFor(model => model.Description)
             </dd>
             <dt class="col-sm-10">
                 @Html.DisplayFor(model => model.Hashtag)
             </dt>
+            </br>
+            </br>
+            @if (ViewBag.Delete)
+            {
+                @using (Html.BeginForm("Delete", "Image", new { Id = Model.Id }, FormMethod.Post))
+                {
+                    <dt class="col-sm-8">
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    </dt>
+                }
+            }
         </dl>
     </div>
 </div>

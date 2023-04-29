@@ -17,5 +17,7 @@ namespace MonolithicMultimedia.Services.Interfaces
         Task<List<ImageDto>> GetUserImages(Guid userId);
 
         Task CreateImage(CommandImageDto commandImageDto, Stream stream, string userId, string fileName);
+
+        Task DeleteImage(int imageId, string userId);
     }
 }

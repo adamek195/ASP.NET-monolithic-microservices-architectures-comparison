@@ -73,5 +73,15 @@ namespace MonolithicMultimedia.Services
 
             return _mapper.Map<List<ImageDto>>(images);
         }
+
+        public async Task DeleteImage(int imageId, string userId)
+        {
+            var imageToDelete = await _imagesRepository.GetUserImage(imageId, Guid.Parse(userId));
+
+            if (imageToDelete == null)
+                throw new NotFoundException("Image with this id does not exist.");
+
+            await _imagesRepository.DeleteImage(imageId, Guid.Parse(userId));
+        }
     }
 }

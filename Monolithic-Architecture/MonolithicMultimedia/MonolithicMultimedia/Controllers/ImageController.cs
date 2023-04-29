@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MonolithicMultimedia.Dtos;
 using MonolithicMultimedia.Helpers;
 using MonolithicMultimedia.Services.Interfaces;
+using System;
 using System.Threading.Tasks;
 
 namespace MonolithicMultimedia.Controllers
@@ -12,10 +13,12 @@ namespace MonolithicMultimedia.Controllers
     public class ImageController : Controller
     {
         private readonly IImagesService _imagesService;
+        private readonly IUsersService _usersService;
 
-        public ImageController(IImagesService imagesService)
+        public ImageController(IImagesService imagesService, IUsersService usersService)
         {
             _imagesService = imagesService;
+            _usersService = usersService;
         }
 
         public IActionResult Create()
@@ -36,16 +39,14 @@ namespace MonolithicMultimedia.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var imageDto = await _imagesService.GetImage(id);
+            var userDto = await _usersService.GetUserById(imageDto.UserId.ToString());
+            ViewBag.UserName = userDto.FirstName + " " + userDto.LastName;
+
+            ViewBag.Delete = false;
+            if (imageDto.UserId.ToString() == User.GetId())
+                ViewBag.Delete = true;
 
             return View(imageDto);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Hashtag(string hashtag)
-        {
-            var images = await _imagesService.GetImagesByHashtag(hashtag);
-
-            return View(images);
         }
 
         [HttpPost]
@@ -71,8 +72,17 @@ namespace MonolithicMultimedia.Controllers
             using (var stream = imageFile.OpenReadStream())
             {
                 await _imagesService.CreateImage(imageDto, stream, User.GetId(), imageFile.FileName);
+
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _imagesService.DeleteImage(id, User.GetId());
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

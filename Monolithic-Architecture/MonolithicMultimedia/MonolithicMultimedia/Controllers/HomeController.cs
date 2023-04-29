@@ -17,6 +17,7 @@ namespace MonolithicMultimedia.Controllers
             _imagesService = imagesService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var images = await _imagesService.GetImages();
@@ -24,6 +25,15 @@ namespace MonolithicMultimedia.Controllers
             return View(images);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Hashtag(string hashtag)
+        {
+            var images = await _imagesService.GetImagesByHashtag(hashtag);
+
+            return View(images);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
