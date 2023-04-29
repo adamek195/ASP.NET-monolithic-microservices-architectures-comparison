@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MonolithicMultimedia.Services.Interfaces;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace MonolithicMultimedia.Controllers
 {
@@ -18,11 +19,14 @@ namespace MonolithicMultimedia.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page)
         {
             var images = await _imagesService.GetImages();
 
-            return View(images);
+            var pageNumber = page ?? 1;
+            var imagesOnPage = images.ToPagedList(pageNumber, 9);
+
+            return View(imagesOnPage);
         }
 
         [HttpGet]
