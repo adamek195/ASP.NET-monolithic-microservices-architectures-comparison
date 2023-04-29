@@ -40,6 +40,14 @@ namespace MonolithicMultimedia.Controllers
             return View(imageDto);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Hashtag(string hashtag)
+        {
+            var images = await _imagesService.GetImagesByHashtag(hashtag);
+
+            return View(images);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(CommandImageDto imageDto, IFormFile imageFile)
         {

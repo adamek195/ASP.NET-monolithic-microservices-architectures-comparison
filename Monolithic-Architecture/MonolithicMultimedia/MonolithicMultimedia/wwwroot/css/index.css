@@ -1,5 +1,5 @@
-﻿.details-wrapper {
-    margin-top: 80px;
+﻿.list-wrapper {
+    margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: auto;
@@ -7,25 +7,25 @@
     justify-content: center;
     flex-direction: column;
     text-align: left;
-    width: 50%;
+    width: 30%;
 }
 
-.details-inner {
+.list-inner {
     background: #ffffff;
     padding: 40px 55px 40px 55px;
     border-radius: 15px;
     transition: all .3s;
 }
 
-.details-wrapper h4 {
+.list-wrapper h6 {
     text-align: center;
     margin: 0;
     line-height: 1;
 }
 
-.details-wrapper img {
-    height: 520px;
-    width: 520px;
+.list-wrapper img {
+    height: 320px;
+    width: 320px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -36,5 +36,4 @@
 
 #center {
     text-align: center;
-}  
-
+}

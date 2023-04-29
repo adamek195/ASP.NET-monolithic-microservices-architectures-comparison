@@ -1,3 +1,28 @@
-﻿@{
+﻿@model List<MonolithicMultimedia.Dtos.ImageDto>
+
+@{
     ViewData["Title"] = "Home Page";
 }
+
+@section Styles {
+    <link rel="stylesheet" href="@Url.Content("~/css/index.css")" />
+}
+
+<div class="row">
+    @foreach (var image in Model)
+    {
+        <div class="list-wrapper">
+            <div class="list-inner">
+                <div class="center">
+                    <img src="~/Image/GetImage/@Html.DisplayFor(imageDto => image.Id)" alt="@Html.DisplayFor(imageDto => image.Title)" class="img-fluid">
+                </div>
+                <hr />
+                <dl class="row">
+                    <dd class="col-sm-10">
+                        <h6> @Html.DisplayFor(imageDto => image.Title) </h6>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    }
+</div>
