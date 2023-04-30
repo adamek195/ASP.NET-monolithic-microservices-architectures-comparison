@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using MonolithicMultimedia.Dtos;
 using MonolithicMultimedia.Helpers;
 using MonolithicMultimedia.Services.Interfaces;
-using System;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace MonolithicMultimedia.Controllers
 {
@@ -60,6 +60,17 @@ namespace MonolithicMultimedia.Controllers
             var images = await _imagesService.GetImagesByHashtag(hashtag);
 
             return View(images);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AccountImages(int? page)
+        {
+            var images = await _imagesService.GetUserImages(User.GetId());
+
+            var pageNumber = page ?? 1;
+            var imagesOnPage = images.ToPagedList(pageNumber, 9);
+
+            return View(imagesOnPage);
         }
 
         [HttpPost]

@@ -49,9 +49,9 @@ namespace MonolithicMultimedia.Services
             return _mapper.Map<List<ImageDto>>(images);
         }
 
-        public async Task<List<ImageDto>> GetUserImages(Guid userId)
+        public async Task<List<ImageDto>> GetUserImages(string userId)
         {
-            var images = await _imagesRepository.GetUserImages(userId);
+            var images = await _imagesRepository.GetUserImages(Guid.Parse(userId));
 
             return _mapper.Map<List<ImageDto>>(images);
         }

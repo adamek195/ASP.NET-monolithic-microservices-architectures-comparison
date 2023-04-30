@@ -14,7 +14,7 @@ namespace MonolithicMultimedia.Services.Interfaces
 
         Task<List<ImageDto>> GetImagesByHashtag(string hashtag);
 
-        Task<List<ImageDto>> GetUserImages(Guid userId);
+        Task<List<ImageDto>> GetUserImages(string userId);
 
         Task CreateImage(CommandImageDto commandImageDto, Stream stream, string userId, string fileName);
 
