@@ -23,23 +23,25 @@
             <dd class="col-sm-5">
                 @Html.DisplayFor(model => model.Description)
             </dd>
-            <dt class="col-sm-10">
+            <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.Hashtag)
-            </dt>
+            </dd>
             </br>
-            </br>
-            @if (ViewBag.Delete)
-            {
+        @if (ViewBag.Delete)
+        {
+
+            <div class="btn-group" role="group">
                 @using (Html.BeginForm("Delete", "Image", new { Id = Model.Id }, FormMethod.Post))
                 {
-                    <dt class="col-sm-9">
+                    <dd class="col-sm-1">
                         <input type="submit" value="Delete" class="btn btn-danger" />
-                    </dt>
+                    </dd>
                 }
-                <dt class="col-sm-9">
+                <dd class="col-sm-1">
                     @Html.ActionLink("Update", "Update", new { id = Model.Id }, new { @class = "btn btn-warning" })
-                </dt>
-            }
+                </dd>
+            </div>
+        }
         </dl>
     </div>
 </div>

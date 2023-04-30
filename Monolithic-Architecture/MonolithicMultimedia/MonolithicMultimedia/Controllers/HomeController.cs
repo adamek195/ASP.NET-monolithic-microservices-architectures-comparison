@@ -30,14 +30,6 @@ namespace MonolithicMultimedia.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Hashtag(string hashtag)
-        {
-            var images = await _imagesService.GetImagesByHashtag(hashtag);
-
-            return View(images);
-        }
-
-        [HttpGet]
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
