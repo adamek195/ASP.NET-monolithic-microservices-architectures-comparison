@@ -12,10 +12,12 @@ namespace MonolithicMultimedia.Controllers
     public class HomeController : Controller
     {
         private readonly IImagesService _imagesService;
+        private readonly IVideosService _videosService;
 
-        public HomeController(IImagesService imagesService)
+        public HomeController(IImagesService imagesService, IVideosService videosService)
         {
             _imagesService = imagesService;
+            _videosService = videosService;
         }
 
         [HttpGet]
@@ -27,6 +29,17 @@ namespace MonolithicMultimedia.Controllers
             var imagesOnPage = images.ToPagedList(pageNumber, 9);
 
             return View(imagesOnPage);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Video(int? page)
+        {
+            var videos = await _videosService.GetVideos();
+
+            var pageNumber = page ?? 1;
+            var videosOnPage = videos.ToPagedList(pageNumber, 9);
+
+            return View(videosOnPage);
         }
 
         [HttpGet]

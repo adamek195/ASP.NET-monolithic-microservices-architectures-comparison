@@ -1,0 +1,46 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IPagedList<MonolithicMultimedia.Dtos.VideoDto>
+
+@{
+    ViewData["Title"] = "Account Videos";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="@Url.Content("~/css/index.css")" />
+}
+
+<div class="row">
+    @foreach (var video in Model)
+    {
+        <div class="list-wrapper">
+            <div class="list-inner">
+                <div class="center">
+                    <video controls>
+                        <source src="~/Video/GetVideo/@Html.DisplayFor(videoDto => video.Id)" type="video/mp4">
+                    </video>
+                </div>
+                <hr />
+                <dl class="row">
+                    <dd class="col-sm-12">
+                        <h6> @Html.DisplayFor(videoDto => video.Title) </h6>
+                    </dd>
+                    <dd class="col-sm-9">
+                        @Html.ActionLink("Details", "Details", "Video", new { id = video.Id }, new { @class = "btn btn-info" })
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    }
+</div>
+</br>
+</br >
+<div class="row">
+    <div class="col-md-12">
+        @Html.PagedListPager((IPagedList) Model, page => Url.Action("AccountVideos", new {page = page}),
+        new X.PagedList.Web.Common.PagedListRenderOptions {
+        LiElementClasses = new string[] {"page-item"},
+        PageClasses = new string[] { "page-link" }
+        })
+    </div>
+</div>

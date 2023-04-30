@@ -43,6 +43,8 @@ namespace MonolithicMultimedia
             services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddTransient<IImagesRepository, ImagesRepository>();
             services.AddTransient<IImagesService, ImagesService>();
+            services.AddTransient<IVideosRepository, VideosRepository>();
+            services.AddTransient<IVideosService, VideosService>();
 
             services.AddSingleton(AutoMapperConfig.Initialize());
 

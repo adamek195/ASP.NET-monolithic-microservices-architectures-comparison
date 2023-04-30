@@ -1,12 +1,12 @@
-﻿@model MonolithicMultimedia.Dtos.CommandImageDto
+﻿@model MonolithicMultimedia.Dtos.CommandVideoDto
 
-@using (Html.BeginForm("Update", "Image", FormMethod.Post))
+@using (Html.BeginForm("Create", "Video", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <form>
         <div class="file-wrapper">
             <div class="file-inner">
                 <div class="form-group">
-                    <img class="image-icon" src="~/images/image.png" alt="image" />
+                    <img class="video-icon" src="~/images/video.png" alt="video" />
                     <hr />
                     @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-15">
@@ -28,9 +28,19 @@
                         @Html.ValidationMessageFor(model => model.Hashtag, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <hr />
                 <div class="form-group">
                     <div class="col-md-15">
-                        <input type="submit" value="Update" class="btn btn-primary" />
+                        <input type="file" name="videoFile" className="form-control" />
+                    </div>
+                </div>
+                @if (ViewData["VideoError"] != null)
+                {
+                    <label class="text-danger">@ViewData["VideoError"]</label>
+                }
+                <div class="form-group">
+                    <div class="col-md-15">
+                        <input type="submit" value="Add" class="btn btn-success" />
                     </div>
                 </div>
             </div>

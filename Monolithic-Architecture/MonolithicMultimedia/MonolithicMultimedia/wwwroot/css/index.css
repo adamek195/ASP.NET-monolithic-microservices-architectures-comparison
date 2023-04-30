@@ -33,6 +33,17 @@
     padding: 10px;
 }
 
+.list-wrapper video {
+    height: 320px;
+    width: 320px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 10px;
+}
+
 #center {
     text-align: center;
 }

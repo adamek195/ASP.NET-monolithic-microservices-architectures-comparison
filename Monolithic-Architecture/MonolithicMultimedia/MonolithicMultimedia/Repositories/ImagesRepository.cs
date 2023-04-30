@@ -74,9 +74,9 @@ namespace MonolithicMultimedia.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteImage(int imageId, Guid userId)
+        public async Task DeleteImage(int id, Guid userId)
         {
-            var imageToDelete = await _context.Images.SingleOrDefaultAsync(x => x.Id == imageId && x.UserId == userId);
+            var imageToDelete = await _context.Images.SingleOrDefaultAsync(x => x.Id == id && x.UserId == userId);
 
             if (imageToDelete != null)
                 _context.Images.Remove(imageToDelete);

@@ -1,12 +1,12 @@
-﻿@model MonolithicMultimedia.Dtos.CommandImageDto
+﻿@model MonolithicMultimedia.Dtos.CommandVideoDto
 
-@using (Html.BeginForm("Update", "Image", FormMethod.Post))
+@using (Html.BeginForm("Update", "Video", FormMethod.Post))
 {
     <form>
         <div class="file-wrapper">
             <div class="file-inner">
                 <div class="form-group">
-                    <img class="image-icon" src="~/images/image.png" alt="image" />
+                    <img class="video-icon" src="~/images/video.png" alt="video" />
                     <hr />
                     @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-15">

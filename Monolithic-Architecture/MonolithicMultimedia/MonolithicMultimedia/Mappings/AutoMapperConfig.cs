@@ -19,6 +19,9 @@ namespace MonolithicMultimedia.Mappings
                 cfg.CreateMap<CommandImageDto, Image>();
                 cfg.CreateMap<ImageDto, Image>();
                 cfg.CreateMap<Image, ImageDto>();
+                cfg.CreateMap<CommandVideoDto, Video>();
+                cfg.CreateMap<VideoDto, Video>();
+                cfg.CreateMap<Video, VideoDto>();
             })
             .CreateMapper();
     }
