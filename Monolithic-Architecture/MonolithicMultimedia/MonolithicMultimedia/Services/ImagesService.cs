@@ -15,12 +15,14 @@ namespace MonolithicMultimedia.Services
     public class ImagesService : IImagesService
     {
         private readonly IImagesRepository _imagesRepository;
+        private readonly IUsersRepository _usersRepository;
         private readonly MediaRepositorySettings _mediaRepositorySettings;
         private readonly IMapper _mapper;
 
-        public ImagesService(IImagesRepository imagesRepository, MediaRepositorySettings mediaRepositorySettings, IMapper mapper)
+        public ImagesService(IImagesRepository imagesRepository, IUsersRepository usersRepository, MediaRepositorySettings mediaRepositorySettings, IMapper mapper)
         {
             _imagesRepository = imagesRepository;
+            _usersRepository = usersRepository;
             _mediaRepositorySettings = mediaRepositorySettings;
             _mapper = mapper;
         }
@@ -52,6 +54,18 @@ namespace MonolithicMultimedia.Services
         public async Task<List<ImageDto>> GetUserImages(string userId)
         {
             var images = await _imagesRepository.GetUserImages(Guid.Parse(userId));
+
+            return _mapper.Map<List<ImageDto>>(images);
+        }
+
+        public async Task<List<ImageDto>> GetImagesByEmail(string email)
+        {
+            var user = await _usersRepository.GetUserByEmail(email);
+
+            if (user == null)
+                throw new NotFoundException("Not found user with this email");
+
+            var images = await _imagesRepository.GetUserImages(user.Id);
 
             return _mapper.Map<List<ImageDto>>(images);
         }
