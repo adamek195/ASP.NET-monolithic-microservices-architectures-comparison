@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MonolithicMultimedia.Dtos;
 using MonolithicMultimedia.Helpers;
 using MonolithicMultimedia.Services.Interfaces;
+using System;
 using System.Threading.Tasks;
 using X.PagedList;
 
@@ -41,6 +42,19 @@ namespace MonolithicMultimedia.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Hashtag(int? page, string hashtag)
+        {
+            ViewData["Hashtag"] = hashtag;
+            var pageNumber = page ?? 1;
+
+            var images = await _imagesService.GetImagesByHashtag(hashtag);
+
+            var imagesOnPage = images.ToPagedList(pageNumber, 9);
+
+            return View(imagesOnPage);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var imageDto = await _imagesService.GetImage(id);
@@ -52,14 +66,6 @@ namespace MonolithicMultimedia.Controllers
                 ViewBag.Delete = true;
 
             return View(imageDto);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Hashtag(string hashtag)
-        {
-            var images = await _imagesService.GetImagesByHashtag(hashtag);
-
-            return View(images);
         }
 
         [HttpGet]

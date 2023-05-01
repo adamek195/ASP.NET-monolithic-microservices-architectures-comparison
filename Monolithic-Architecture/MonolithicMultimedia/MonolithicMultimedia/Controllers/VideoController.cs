@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MonolithicMultimedia.Dtos;
+using MonolithicMultimedia.Entities;
 using MonolithicMultimedia.Helpers;
 using MonolithicMultimedia.Services;
 using MonolithicMultimedia.Services.Interfaces;
@@ -56,11 +57,16 @@ namespace MonolithicMultimedia.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Hashtag(string hashtag)
+        public async Task<IActionResult> Hashtag(int? page, string hashtag)
         {
+            ViewData["Hashtag"] = hashtag;
+            var pageNumber = page ?? 1;
+
             var videos = await _videosService.GetVideosByHashtag(hashtag);
 
-            return View(videos);
+            var videosOnPage = videos.ToPagedList(pageNumber, 9);
+
+            return View(videosOnPage);
         }
 
         [HttpGet]

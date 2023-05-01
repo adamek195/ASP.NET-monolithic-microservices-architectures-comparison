@@ -41,7 +41,7 @@ namespace MonolithicMultimedia.Repositories
 
         public async Task<List<Image>> GetImagesByHashtag(string hashtag)
         {
-            var images = await _context.Images.Where(x => x.Hashtag == hashtag).OrderByDescending(x => x.CreationDate).ToListAsync();
+            var images = await _context.Images.Where(x => x.Hashtag.Contains(hashtag)).OrderByDescending(x => x.CreationDate).ToListAsync();
 
             return images;
         }

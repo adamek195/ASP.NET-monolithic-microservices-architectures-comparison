@@ -66,7 +66,7 @@ namespace MonolithicMultimedia.Repositories
 
         public async Task<List<Video>> GetVideosByHashtag(string hashtag)
         {
-            var videos = await _context.Videos.Where(x => x.Hashtag == hashtag).OrderByDescending(x => x.CreationDate).ToListAsync();
+            var videos = await _context.Videos.Where(x => x.Hashtag.Contains(hashtag)).OrderByDescending(x => x.CreationDate).ToListAsync();
 
             return videos;
         }
