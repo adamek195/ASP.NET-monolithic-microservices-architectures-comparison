@@ -34,8 +34,8 @@
 }
 
 .list-wrapper video {
-    height: 320px;
-    width: 320px;
+    width: 100% !important;
+    height: auto !important;
     display: block;
     margin-left: auto;
     margin-right: auto;

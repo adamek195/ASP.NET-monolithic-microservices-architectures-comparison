@@ -35,8 +35,8 @@
 }
 
 .details-wrapper video {
-    height: 520px;
-    width: 520px;
+    width: 100% !important;
+    height: auto !important;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -47,5 +47,5 @@
 
 #center {
     text-align: center;
-}  
+}
 
