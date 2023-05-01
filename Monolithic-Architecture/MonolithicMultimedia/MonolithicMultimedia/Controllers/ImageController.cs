@@ -5,6 +5,7 @@ using MonolithicMultimedia.Dtos;
 using MonolithicMultimedia.Helpers;
 using MonolithicMultimedia.Services.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using X.PagedList;
 
@@ -55,6 +56,25 @@ namespace MonolithicMultimedia.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Email(int? page, string email)
+        {
+            ViewData["Email"] = email;
+            var pageNumber = page ?? 1;
+
+            if (!String.IsNullOrEmpty(email))
+            {
+                var images = await _imagesService.GetImagesByEmail(email);
+
+                var imagesOnPage = images.ToPagedList(pageNumber, 9);
+
+                return View(imagesOnPage);
+            }
+
+            var emptyImages = new List<ImageDto>();
+            return View(emptyImages.ToPagedList(pageNumber, 9));
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var imageDto = await _imagesService.GetImage(id);
@@ -69,7 +89,7 @@ namespace MonolithicMultimedia.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AccountImages(int? page)
+        public async Task<IActionResult> UserImages(int? page)
         {
             var images = await _imagesService.GetUserImages(User.GetId());
 

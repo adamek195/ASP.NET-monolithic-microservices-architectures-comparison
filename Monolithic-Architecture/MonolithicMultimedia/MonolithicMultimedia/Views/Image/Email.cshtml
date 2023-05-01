@@ -1,0 +1,53 @@
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IPagedList<MonolithicMultimedia.Dtos.ImageDto>
+
+@{
+    ViewData["Title"] = "Email Page";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="@Url.Content("~/css/index.css")" />
+}
+
+<form class="col-lg-6 offset-lg-3 ">
+    <div class="row justify-content-center">
+        <p>
+            <input type="search" placeholder="Enter user email ..." value="@ViewData["Email"]" name="Email" style="width:500px" />
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </p>
+    </div>
+</form>
+
+<div class="row">
+    @foreach (var image in Model)
+    {
+        <div class="list-wrapper">
+            <div class="list-inner">
+                <div class="center">
+                    <img src="~/Image/GetImage/@Html.DisplayFor(imageDto => image.Id)" alt="@Html.DisplayFor(imageDto => image.Title)" class="img-fluid">
+                </div>
+                <hr />
+                <dl class="row">
+                    <dd class="col-sm-12">
+                        <h6> @Html.DisplayFor(imageDto => image.Title) </h6>
+                    </dd>
+                    <dd class="col-sm-9">
+                        @Html.ActionLink("Details", "Details", "Image", new { id = image.Id }, new { @class = "btn btn-info" })
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    }
+</div>
+</br>
+</br >
+<div class="row">
+    <div class="col-md-12">
+        @Html.PagedListPager((IPagedList) Model, page => Url.Action("Index", new {page = page}),
+        new X.PagedList.Web.Common.PagedListRenderOptions {
+        LiElementClasses = new string[] {"page-item"},
+        PageClasses = new string[] { "page-link" }
+        })
+    </div>
+</div>

@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MonolithicMultimedia.Dtos;
-using MonolithicMultimedia.Entities;
 using MonolithicMultimedia.Helpers;
-using MonolithicMultimedia.Services;
 using MonolithicMultimedia.Services.Interfaces;
+using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 using X.PagedList;
 
@@ -70,7 +70,26 @@ namespace MonolithicMultimedia.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AccountVideos(int? page)
+        public async Task<IActionResult> Email(int? page, string email)
+        {
+            ViewData["Email"] = email;
+            var pageNumber = page ?? 1;
+
+            if (!String.IsNullOrEmpty(email))
+            {
+                var videos = await _videosService.GetVideosByEmail(email);
+
+                var videosOnPage = videos.ToPagedList(pageNumber, 9);
+
+                return View(videosOnPage);
+            }
+
+            var emptyVideos = new List<VideoDto>();
+            return View(emptyVideos.ToPagedList(pageNumber, 9));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserVideos(int? page)
         {
             var videos = await _videosService.GetUserVideos(User.GetId());
 
