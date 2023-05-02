@@ -1,9 +1,9 @@
 ﻿@using X.PagedList.Mvc.Core;
 @using X.PagedList;
-@model IPagedList<Multimedia.Web.Dtos.ImageDto>
+@model IPagedList<Multimedia.Web.Dtos.VideoDto>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Video Page";
 }
 
 @section Styles {
@@ -11,20 +11,22 @@
 }
 
 <div class="row">
-    @foreach (var image in Model)
+    @foreach (var video in Model)
     {
         <div class="list-wrapper">
             <div class="list-inner">
                 <div class="center">
-                    <img src="~/Image/GetImage/@Html.DisplayFor(imageDto => image.Id)" alt="@Html.DisplayFor(imageDto => image.Title)" class="img-fluid">
+                    <video controls>
+                        <source src="~/Video/GetVideo/@Html.DisplayFor(videoDto => video.Id)" type="video/mp4">
+                    </video>
+                    <hr />
                 </div>
-                <hr />
                 <dl class="row">
                     <dd class="col-sm-12">
-                        <h6> @Html.DisplayFor(imageDto => image.Title) </h6>
+                        <h6> @Html.DisplayFor(videoDto => video.Title) </h6>
                     </dd>
                     <dd class="col-sm-9">
-                        @Html.ActionLink("Details", "Details", "Image", new { id = image.Id }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Details", "Details", "Video", new { id = video.Id }, new { @class = "btn btn-info" })
                     </dd>
                 </dl>
             </div>
@@ -35,7 +37,7 @@
 </br >
 <div class="row">
     <div class="col-md-12">
-        @Html.PagedListPager((IPagedList) Model, page => Url.Action("Index", new {page = page}),
+        @Html.PagedListPager((IPagedList) Model, page => Url.Action("Video", new {page = page}),
         new X.PagedList.Web.Common.PagedListRenderOptions {
         LiElementClasses = new string[] {"page-item"},
         PageClasses = new string[] { "page-link" }

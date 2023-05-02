@@ -1,0 +1,49 @@
+﻿@model Multimedia.Web.Dtos.VideoDto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="@Url.Content("~/css/details.css")" />
+}
+
+<div class="details-wrapper">
+    <div class="details-inner">
+        <h4 class="display-4">@Html.DisplayFor(model => model.Title)</h4>
+        <hr />
+        <div class="center">
+            <video controls>
+                <source src="~/Video/GetVideo/@Html.DisplayFor(model => model.Id)" type="video/mp4" />
+            </video>
+        </div>
+        <hr />
+        <dl class="row">
+            <dd class="col-sm-4">
+                <h6>@ViewBag.userName: </h6>
+            </dd>
+            <dd class="col-sm-5">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Hashtag)
+            </dd>
+            </br>
+            @if (ViewBag.Delete)
+            {
+
+                <div class="btn-group" role="group">
+                    @using (Html.BeginForm("Delete", "Video", new { Id = Model.Id }, FormMethod.Post))
+                    {
+                        <dd class="col-sm-1">
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                        </dd>
+                    }
+                    <dd class="col-sm-1">
+                        @Html.ActionLink("Update", "Update", new { id = Model.Id }, new { @class = "btn btn-warning" })
+                    </dd>
+                </div>
+            }
+        </dl>
+    </div>
+</div>

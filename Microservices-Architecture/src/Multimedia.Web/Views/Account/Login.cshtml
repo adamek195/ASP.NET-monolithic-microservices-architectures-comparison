@@ -1,0 +1,57 @@
+﻿@model Multimedia.Web.Dtos.LoginUserDto
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang ="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@{ViewData["Title"] = "Login";} </title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/signin.css" />
+    </head>
+    <body>
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+        {
+            <form>
+                <div class="auth-wrapper">
+                    <div class="auth-inner">
+                        <img src="~/images/user.jpg" alt="user" />
+                        <hr />
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-15">
+                                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-15">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-2">
+                                <input type="submit" value="Sign in" class="btn btn-success" />
+                            </div>
+                            <div class="col-md-2">
+                                <a class="btn btn-success" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                            </div>
+                        </div>
+                        @if (ViewData["UserNotFoundMessage"] != null)
+                        {
+                            <label class="text-danger">@ViewData["UserNotFoundMessage"]</label>
+                        }
+                    </div>
+                </div>
+            </form>
+        }
+    </body>
+</html>

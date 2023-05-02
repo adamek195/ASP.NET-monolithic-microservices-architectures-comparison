@@ -3,7 +3,7 @@
 @model IPagedList<Multimedia.Web.Dtos.ImageDto>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Account Images";
 }
 
 @section Styles {
@@ -35,7 +35,7 @@
 </br >
 <div class="row">
     <div class="col-md-12">
-        @Html.PagedListPager((IPagedList) Model, page => Url.Action("Index", new {page = page}),
+        @Html.PagedListPager((IPagedList) Model, page => Url.Action("AccountImages", new {page = page}),
         new X.PagedList.Web.Common.PagedListRenderOptions {
         LiElementClasses = new string[] {"page-item"},
         PageClasses = new string[] { "page-link" }

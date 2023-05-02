@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "BadRequest";
+    var exception = ViewData["Exception"] as Exception;
+}
+
+<h2>Bad Request Error</h2>
+
+<hgroup class="title">
+
+    <h2 class="error">@exception.Message</h2>
+
+</hgroup>

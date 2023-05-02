@@ -1,0 +1,51 @@
+﻿.details-wrapper {
+    margin-top: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: left;
+    width: 50%;
+}
+
+.details-inner {
+    background: #ffffff;
+    padding: 40px 55px 40px 55px;
+    border-radius: 15px;
+    transition: all .3s;
+}
+
+.details-wrapper h4 {
+    text-align: center;
+    margin: 0;
+    line-height: 1;
+}
+
+.details-wrapper img {
+    height: 520px;
+    width: 520px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 10px;
+}
+
+.details-wrapper video {
+    width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 10px;
+}
+
+#center {
+    text-align: center;
+}
+
