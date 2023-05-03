@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Multimedia.Users.Exceptions.Filters
+namespace Multimedia.Images.Exceptions.Filters
 {
     public class GlobalExceptionFilter : ExceptionFilterAttribute
     {

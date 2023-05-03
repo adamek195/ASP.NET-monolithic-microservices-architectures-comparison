@@ -17,7 +17,7 @@ namespace Multimedia.Images.Repositories.Interfaces
 
         Task<List<Image>> GetUserImages(Guid userId);
 
-        public Task AddImage(Image image);
+        public Task<Image> AddImage(Image image);
 
         public Task UpdateImage(int id, Image image);
 

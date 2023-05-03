@@ -44,7 +44,7 @@ namespace Multimedia.Users.Controllers
             if (token == null)
                 return BadRequest();
 
-            return Ok(token);
+            return Ok(new TokenDto { Token = token});
         }
     }
 }
