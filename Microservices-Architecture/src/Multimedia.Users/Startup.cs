@@ -1,15 +1,20 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
+using Multimedia.Users.Data;
+using Multimedia.Users.Entities;
+using Multimedia.Users.Exceptions.Filters;
+using Multimedia.Users.Mappings;
+using Multimedia.Users.Repositories;
+using Multimedia.Users.Repositories.Interfaces;
+using Multimedia.Users.Services;
+using Multimedia.Users.Services.Interfaces;
+using System.Text;
 
 namespace Multimedia.Users
 {
@@ -22,13 +27,46 @@ namespace Multimedia.Users
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<UsersMultimediaContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("UsersMultimediaCS")));
+
+            services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<UsersMultimediaContext>();
+
+            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
+
+            services.AddSingleton(AutoMapperConfig.Initialize());
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(GlobalExceptionFilter));
+            });
+
             services.AddControllers();
+
+            var key = Encoding.ASCII.GetBytes(Configuration["JwtToken:Key"]);
+
+            services.AddAuthentication(options =>
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidIssuer = Configuration["JwtToken:TokenIssuer"],
+                        ValidateAudience = false,
+                        RequireExpirationTime = true
+                    };
+                });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -40,6 +78,7 @@ namespace Multimedia.Users
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

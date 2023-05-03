@@ -1,0 +1,41 @@
+﻿using Microsoft.AspNetCore.Identity;
+using Multimedia.Users.Entities;
+using Multimedia.Users.Repositories.Interfaces;
+using System.Threading.Tasks;
+
+namespace Multimedia.Users.Repositories
+{
+    public class UsersRepository : IUsersRepository
+    {
+        private readonly UserManager<User> _userManager;
+
+        public UsersRepository(UserManager<User> userManager)
+        {
+            _userManager = userManager;
+        }
+
+        public async Task<User> GetUserById(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            return user;
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            return user;
+        }
+
+        public async Task<User> AddUser(User newUser)
+        {
+            var result = await _userManager.CreateAsync(newUser, newUser.PasswordHash);
+
+            if (!result.Succeeded)
+                return null;
+
+            return newUser;
+        }
+    }
+}
