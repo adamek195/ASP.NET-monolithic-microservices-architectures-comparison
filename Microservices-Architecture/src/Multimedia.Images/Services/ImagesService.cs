@@ -44,6 +44,9 @@ namespace Multimedia.Images.Services
 
         public async Task<List<ImageDto>> GetImagesByHashtag(string hashtag)
         {
+            if (String.IsNullOrEmpty(hashtag))
+                throw new ArgumentNullException(nameof(hashtag));
+
             var images = await _imagesRepository.GetImagesByHashtag(hashtag);
 
             return _mapper.Map<List<ImageDto>>(images);
@@ -51,6 +54,9 @@ namespace Multimedia.Images.Services
 
         public async Task<List<ImageDto>> GetUserImages(string userId)
         {
+            if (String.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId));
+
             var images = await _imagesRepository.GetUserImages(Guid.Parse(userId));
 
             return _mapper.Map<List<ImageDto>>(images);

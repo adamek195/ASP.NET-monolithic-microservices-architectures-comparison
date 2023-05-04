@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multimedia.Web", "Multimedi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multimedia.Users", "Multimedia.Users\Multimedia.Users.csproj", "{4D95BDFD-98FF-43C5-BD6E-CD1D6BC4DAFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multimedia.Images", "Multimedia.Images\Multimedia.Images.csproj", "{24ECC11A-569E-40F1-879C-C8E0EADCF6EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multimedia.Images", "Multimedia.Images\Multimedia.Images.csproj", "{24ECC11A-569E-40F1-879C-C8E0EADCF6EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multimedia.Videos", "Multimedia.Videos\Multimedia.Videos.csproj", "{6AD3D10C-A8F4-4EBD-B270-FE2974B21CFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{24ECC11A-569E-40F1-879C-C8E0EADCF6EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24ECC11A-569E-40F1-879C-C8E0EADCF6EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24ECC11A-569E-40F1-879C-C8E0EADCF6EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AD3D10C-A8F4-4EBD-B270-FE2974B21CFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AD3D10C-A8F4-4EBD-B270-FE2974B21CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AD3D10C-A8F4-4EBD-B270-FE2974B21CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AD3D10C-A8F4-4EBD-B270-FE2974B21CFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

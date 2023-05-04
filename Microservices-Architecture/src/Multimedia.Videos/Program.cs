@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Multimedia.Images
+namespace Multimedia.Videos
 {
     public class Program
     {
@@ -15,7 +15,7 @@ namespace Multimedia.Images
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("http://localhost:5006");
+                    webBuilder.UseUrls("http://localhost:5007");
                 });
     }
 }

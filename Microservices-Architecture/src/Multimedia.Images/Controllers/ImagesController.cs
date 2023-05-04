@@ -2,13 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Multimedia.Images.Dtos;
 using Multimedia.Images.Exceptions.Filters;
 using Multimedia.Images.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Multimedia.Images.Controllers
