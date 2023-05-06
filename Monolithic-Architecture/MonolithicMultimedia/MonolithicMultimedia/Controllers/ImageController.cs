@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MonolithicMultimedia.Dtos;
+using MonolithicMultimedia.Exceptions.Filters;
 using MonolithicMultimedia.Helpers;
 using MonolithicMultimedia.Services.Interfaces;
 using System;
@@ -12,6 +13,7 @@ using X.PagedList;
 namespace MonolithicMultimedia.Controllers
 {
     [Authorize]
+    [TypeFilter(typeof(GlobalExceptionFilter))]
     public class ImageController : Controller
     {
         private readonly IImagesService _imagesService;

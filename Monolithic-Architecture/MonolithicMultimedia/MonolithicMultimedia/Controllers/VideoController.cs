@@ -8,10 +8,12 @@ using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
 using X.PagedList;
+using MonolithicMultimedia.Exceptions.Filters;
 
 namespace MonolithicMultimedia.Controllers
 {
     [Authorize]
+    [TypeFilter(typeof(GlobalExceptionFilter))]
     public class VideoController : Controller
     {
         private readonly IVideosService _videosService;

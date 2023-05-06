@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MonolithicMultimedia.Exceptions.Filters;
 using MonolithicMultimedia.Services.Interfaces;
 using System.Threading.Tasks;
 using X.PagedList;
@@ -9,6 +10,7 @@ using X.PagedList;
 namespace MonolithicMultimedia.Controllers
 {
     [Authorize]
+    [TypeFilter(typeof(GlobalExceptionFilter))]
     public class HomeController : Controller
     {
         private readonly IImagesService _imagesService;
