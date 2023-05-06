@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -37,7 +38,7 @@ namespace Multimedia.Users.Controllers
         [HttpPost]
         [Route("Authenticate")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginUserDto loginUserDto)
+        public async Task<IActionResult> Login([FromBody] LoginUserDto loginUserDto)
         {
             var token = await _usersService.LoginUser(loginUserDto);
 
@@ -45,6 +46,19 @@ namespace Multimedia.Users.Controllers
                 return BadRequest();
 
             return Ok(new TokenDto { Token = token});
+        }
+
+        [HttpGet]
+        [Route("Email")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> Email(UserEmailDto emailDto)
+        {
+            var user = await _usersService.GetUserByEmail(emailDto);
+
+            if (user == null)
+                return BadRequest();
+
+            return Ok(user);
         }
     }
 }

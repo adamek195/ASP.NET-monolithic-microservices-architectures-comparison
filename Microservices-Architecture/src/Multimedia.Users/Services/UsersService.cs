@@ -32,6 +32,9 @@ namespace Multimedia.Users.Services
 
         public async Task<UserDto> GetUserById(string userId)
         {
+            if (String.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId));
+
             var user = await _usersRepository.GetUserById(userId);
 
             if (user == null)
@@ -40,9 +43,12 @@ namespace Multimedia.Users.Services
             return _mapper.Map<UserDto>(user);
         }
 
-        public async Task<UserDto> GetUserByEmail(string email)
+        public async Task<UserDto> GetUserByEmail(UserEmailDto emailDto)
         {
-            var user = await _usersRepository.GetUserByEmail(email);
+            if(String.IsNullOrEmpty(emailDto.Email))
+                throw new ArgumentNullException(nameof(emailDto.Email));
+
+            var user = await _usersRepository.GetUserByEmail(emailDto.Email);
 
             if (user == null)
                 throw new NotFoundException("User does not exist.");

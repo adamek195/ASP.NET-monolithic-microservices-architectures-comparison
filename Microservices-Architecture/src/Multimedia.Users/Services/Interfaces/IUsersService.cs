@@ -8,10 +8,10 @@ namespace Multimedia.Users.Services.Interfaces
     {
         Task<UserDto> GetUserById(string userId);
 
-        Task<UserDto> GetUserByEmail(string email);
+        Task<UserDto> GetUserByEmail(UserEmailDto emailDto);
 
         Task<UserDto> CreateUser(CreateUserDto newUserDto);
 
-        Task<string> LoginUser(LoginUserDto newUserDto);
+        Task<string> LoginUser(LoginUserDto loginUserDto);
     }
 }
