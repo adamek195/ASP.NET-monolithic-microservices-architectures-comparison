@@ -61,6 +61,9 @@ namespace MonolithicMultimedia.Services
 
         public async Task<List<VideoDto>> GetUserVideos(string userId)
         {
+            if (String.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId));
+
             var videos = await _videosRepository.GetUserVideos(Guid.Parse(userId));
 
             return _mapper.Map<List<VideoDto>>(videos);
