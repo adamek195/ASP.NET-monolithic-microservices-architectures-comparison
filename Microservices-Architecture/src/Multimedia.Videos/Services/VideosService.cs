@@ -83,9 +83,6 @@ namespace Multimedia.Videos.Services
 
         public async Task<List<VideoDto>> GetVideosByHashtag(string hashtag)
         {
-            if (String.IsNullOrEmpty(hashtag))
-                throw new ArgumentNullException(nameof(hashtag));
-
             var videos = await _videosRepository.GetVideosByHashtag(hashtag);
 
             return _mapper.Map<List<VideoDto>>(videos);

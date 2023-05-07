@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,9 +22,12 @@ namespace Multimedia.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<IUsersService, UsersService>();
+            services.AddHttpClient<IImagesService, ImagesService>();
             SD.UsersAPIBase = Configuration["ServiceUrls:UsersAPI"];
+            SD.ImagesAPIBase = Configuration["ServiceUrls:ImagesAPI"];
 
             services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IImagesService, ImagesService>();
 
             services.AddMvc(options =>
             {

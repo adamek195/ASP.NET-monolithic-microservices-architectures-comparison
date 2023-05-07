@@ -53,6 +53,9 @@ namespace MonolithicMultimedia.Services
 
         public async Task<List<ImageDto>> GetUserImages(string userId)
         {
+            if (String.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId));
+
             var images = await _imagesRepository.GetUserImages(Guid.Parse(userId));
 
             return _mapper.Map<List<ImageDto>>(images);
@@ -60,6 +63,9 @@ namespace MonolithicMultimedia.Services
 
         public async Task<List<ImageDto>> GetImagesByEmail(string email)
         {
+            if (String.IsNullOrEmpty(email))
+                throw new ArgumentNullException(nameof(email));
+
             var user = await _usersRepository.GetUserByEmail(email);
 
             if (user == null)
@@ -90,6 +96,9 @@ namespace MonolithicMultimedia.Services
 
         public async Task UpdateImage(int id, string userId, CommandImageDto commandImageDto)
         {
+            if (String.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId));
+
             var imageToUpdate = await _imagesRepository.GetUserImage(id, Guid.Parse(userId));
 
             if (imageToUpdate == null)
@@ -103,6 +112,9 @@ namespace MonolithicMultimedia.Services
 
         public async Task DeleteImage(int id, string userId)
         {
+            if (String.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId));
+
             var imageToDelete = await _imagesRepository.GetUserImage(id, Guid.Parse(userId));
 
             if (imageToDelete == null)

@@ -42,12 +42,9 @@ namespace Multimedia.Images.Services
             return _mapper.Map<List<ImageDto>>(images);
         }
 
-        public async Task<List<ImageDto>> GetImagesByHashtag(string hashtag)
+        public async Task<List<ImageDto>> GetImagesByHashtag(HashtagDto hashtagDto)
         {
-            if (String.IsNullOrEmpty(hashtag))
-                throw new ArgumentNullException(nameof(hashtag));
-
-            var images = await _imagesRepository.GetImagesByHashtag(hashtag);
+            var images = await _imagesRepository.GetImagesByHashtag(hashtagDto.Hashtag);
 
             return _mapper.Map<List<ImageDto>>(images);
         }
@@ -93,14 +90,17 @@ namespace Multimedia.Images.Services
             await _imagesRepository.UpdateImage(id, imageToUpdate);
         }
 
-        public async Task DeleteImage(int id, UserDto userImageDto)
+        public async Task DeleteImage(int id, UserIdDto userDto)
         {
-            var imageToDelete = await _imagesRepository.GetUserImage(id, userImageDto.UserId);
+            if (String.IsNullOrEmpty(userDto.UserId))
+                throw new ArgumentNullException(nameof(userDto.UserId));
+
+            var imageToDelete = await _imagesRepository.GetUserImage(id, Guid.Parse(userDto.UserId));
 
             if (imageToDelete == null)
                 throw new NotFoundException("Image with this id does not exist.");
 
-            await _imagesRepository.DeleteImage(id, userImageDto.UserId);
+            await _imagesRepository.DeleteImage(id, Guid.Parse(userDto.UserId));
         }
     }
 }

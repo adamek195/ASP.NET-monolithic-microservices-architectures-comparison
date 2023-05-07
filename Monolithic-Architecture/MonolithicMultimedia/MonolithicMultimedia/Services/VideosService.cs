@@ -48,6 +48,9 @@ namespace MonolithicMultimedia.Services
 
         public async Task DeleteVideo(int id, string userId)
         {
+            if (String.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId));
+
             var videoToDelete = await _videosRepository.GetUserVideo(id, Guid.Parse(userId));
 
             if (videoToDelete == null)
@@ -82,6 +85,9 @@ namespace MonolithicMultimedia.Services
 
         public async Task<List<VideoDto>> GetVideosByEmail(string email)
         {
+            if (String.IsNullOrEmpty(email))
+                throw new ArgumentNullException(nameof(email));
+
             var user = await _usersRepository.GetUserByEmail(email);
 
             if (user == null)
@@ -101,6 +107,9 @@ namespace MonolithicMultimedia.Services
 
         public async Task UpdateVideo(int id, string userId, CommandVideoDto commandVideoDto)
         {
+            if (String.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId));
+
             var videoToUpdate = await _videosRepository.GetUserVideo(id, Guid.Parse(userId));
 
             if (videoToUpdate == null)

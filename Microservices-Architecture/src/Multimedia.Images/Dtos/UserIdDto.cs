@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Multimedia.Images.Dtos
 {
-    public class UserDto
+    public class UserIdDto
     {
         [Required]
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
 
     }
 }

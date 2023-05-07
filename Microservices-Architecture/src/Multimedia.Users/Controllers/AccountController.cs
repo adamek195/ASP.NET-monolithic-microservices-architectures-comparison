@@ -51,9 +51,22 @@ namespace Multimedia.Users.Controllers
         [HttpGet]
         [Route("Email")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> Email(UserEmailDto emailDto)
+        public async Task<IActionResult> Email([FromBody] UserEmailDto emailDto)
         {
             var user = await _usersService.GetUserByEmail(emailDto);
+
+            if (user == null)
+                return BadRequest();
+
+            return Ok(user);
+        }
+
+        [HttpGet]
+        [Route("User")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> User([FromBody]  UserIdDto userDto)
+        {
+            var user = await _usersService.GetUserById(userDto);
 
             if (user == null)
                 return BadRequest();

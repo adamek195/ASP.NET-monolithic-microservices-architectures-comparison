@@ -7,6 +7,8 @@ namespace Multimedia.Web.Services.Interfaces
     {
         Task<T> GetUserByEmail<T>(UserEmailDto emailDto, string token = null);
 
+        Task<T> GetUserById<T>(UserIdDto userIdDto, string token = null);
+
         Task<T> CreateUser<T>(CreateUserDto newUserDto, string token = null);
 
         Task<T> LoginUser<T>(LoginUserDto loginUserDto, string token = null);

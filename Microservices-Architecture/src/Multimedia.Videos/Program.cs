@@ -15,7 +15,7 @@ namespace Multimedia.Videos
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("http://localhost:5007");
+                    webBuilder.UseUrls("https://localhost:5007");
                 });
     }
 }

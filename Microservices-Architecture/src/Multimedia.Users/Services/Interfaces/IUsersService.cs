@@ -6,7 +6,7 @@ namespace Multimedia.Users.Services.Interfaces
 {
     public interface IUsersService
     {
-        Task<UserDto> GetUserById(string userId);
+        Task<UserDto> GetUserById(UserIdDto userIdDto);
 
         Task<UserDto> GetUserByEmail(UserEmailDto emailDto);
 

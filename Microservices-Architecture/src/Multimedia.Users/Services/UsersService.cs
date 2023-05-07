@@ -30,12 +30,12 @@ namespace Multimedia.Users.Services
             _configuration = configuration;
         }
 
-        public async Task<UserDto> GetUserById(string userId)
+        public async Task<UserDto> GetUserById(UserIdDto userIdDto)
         {
-            if (String.IsNullOrEmpty(userId))
-                throw new ArgumentNullException(nameof(userId));
+            if (String.IsNullOrEmpty(userIdDto.UserId))
+                throw new ArgumentNullException(nameof(userIdDto.UserId));
 
-            var user = await _usersRepository.GetUserById(userId);
+            var user = await _usersRepository.GetUserById(userIdDto.UserId);
 
             if (user == null)
                 throw new NotFoundException("User does not exist.");

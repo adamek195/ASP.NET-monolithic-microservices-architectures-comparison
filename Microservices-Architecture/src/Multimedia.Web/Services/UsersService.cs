@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
-using Multimedia.Web.Dtos;
+﻿using Multimedia.Web.Dtos;
 using Multimedia.Web.Services.Interfaces;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -22,6 +21,17 @@ namespace Multimedia.Web.Services
                 ApiType = SD.ApiType.POST,
                 Data = newUserDto,
                 Url = SD.UsersAPIBase + "/Account/Register",
+                AccessToken = token
+            });
+        }
+
+        public async Task<T> GetUserById<T>(UserIdDto userIdDto, string token = null)
+        {
+            return await this.SendAsync<T>(new ApiRequest()
+            {
+                ApiType = SD.ApiType.GET,
+                Data = userIdDto,
+                Url = SD.UsersAPIBase + "/Account/User",
                 AccessToken = token
             });
         }

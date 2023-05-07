@@ -1,4 +1,5 @@
 ﻿using Multimedia.Images.Dtos;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace Multimedia.Images.Services.Interfaces
 
         Task<List<ImageDto>> GetImages();
 
-        Task<List<ImageDto>> GetImagesByHashtag(string hashtag);
+        Task<List<ImageDto>> GetImagesByHashtag(HashtagDto hashtagDto);
 
         Task<List<ImageDto>> GetUserImages(string userId);
 
@@ -19,6 +20,6 @@ namespace Multimedia.Images.Services.Interfaces
 
         Task UpdateImage(int id, CommandImageDto commandImageDto);
 
-        Task DeleteImage(int id, UserDto userDto);
+        Task DeleteImage(int id, UserIdDto userDto);
     }
 }
