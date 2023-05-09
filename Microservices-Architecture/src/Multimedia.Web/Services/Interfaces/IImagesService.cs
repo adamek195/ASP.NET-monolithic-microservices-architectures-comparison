@@ -15,7 +15,7 @@ namespace Multimedia.Web.Services.Interfaces
 
         Task<T> GetUserImages<T>(UserIdDto userIdDto, string token = null);
 
-        Task<T> CreateImage<T>(CommandImageDto commandImageDto, Stream stream, string userId, string fileName, string token = null);
+        Task CreateImage(CommandImageDto commandImageDto, Stream stream, string fileName, string token = null);
 
         Task<T> UpdateImage<T>(int id, CommandImageDto commandImageDto, string token = null);
 

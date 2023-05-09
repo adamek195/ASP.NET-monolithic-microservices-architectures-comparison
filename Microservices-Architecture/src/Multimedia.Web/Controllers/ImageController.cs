@@ -102,7 +102,7 @@ namespace Multimedia.Web.Controllers
             return View(imagesOnPage);
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Create(CommandImageDto imageDto, IFormFile imageFile)
         {
             if (!ModelState.IsValid)
@@ -122,13 +122,15 @@ namespace Multimedia.Web.Controllers
                 return View();
             }
 
+            imageDto.UserId = Guid.Parse(User.GetId());
+
             using (var stream = imageFile.OpenReadStream())
             {
-                await _imagesService.CreateImage(imageDto, stream, User.GetId(), imageFile.FileName);
+                await _imagesService.CreateImage(imageDto, stream, imageFile.FileName, User.GetToken());
 
                 return RedirectToAction("Index", "Home");
             }
-        }*/
+        }
 
         [HttpPost]
         public async Task<IActionResult> Update(int id, CommandImageDto imageDto)

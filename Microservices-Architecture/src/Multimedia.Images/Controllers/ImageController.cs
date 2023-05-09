@@ -65,11 +65,6 @@ namespace Multimedia.Images.Controllers
             if (commandImageFileDto.CommandImageDto == null)
                 return BadRequest("You do not upload photo information.");
 
-            if (commandImageFileDto.ImageFile.ContentType.ToLower() != "image/jpeg" &&
-                commandImageFileDto.ImageFile.ContentType.ToLower() != "image/jpg" &&
-                commandImageFileDto.ImageFile.ContentType.ToLower() != "image/png")
-                return BadRequest("You do not upload photo.");
-
             using (var stream = commandImageFileDto.ImageFile.OpenReadStream())
             {
                 var imageDto = await _imagesService.CreateImage(commandImageFileDto.CommandImageDto, stream, commandImageFileDto.ImageFile.FileName);

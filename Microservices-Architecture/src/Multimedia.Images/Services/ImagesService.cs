@@ -64,7 +64,7 @@ namespace Multimedia.Images.Services
             var imageToAdd = _mapper.Map<Image>(commandImageDto);
             imageToAdd.CreationDate = DateTime.Now;
 
-            var resourcePath = _mediaRepositorySettings.ImagePath + '\\' + commandImageDto.UserId.ToString() + '\\' + fileName;
+            var resourcePath = _mediaRepositorySettings.ImagePath + '\\' + commandImageDto.UserId + '\\' + fileName;
             imageToAdd.Path = resourcePath;
             var directoryPath = Path.GetDirectoryName(resourcePath);
             if (!Directory.Exists(directoryPath))
@@ -80,7 +80,7 @@ namespace Multimedia.Images.Services
 
         public async Task UpdateImage(int id, CommandImageDto commandImageDto)
         {
-            var imageToUpdate = await _imagesRepository.GetUserImage(id, commandImageDto.UserId);
+            var imageToUpdate = await _imagesRepository.GetUserImage(id, Guid.Parse(commandImageDto.UserId));
 
             if (imageToUpdate == null)
                 throw new NotFoundException("Image with this id does not exist.");

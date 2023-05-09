@@ -1,11 +1,12 @@
 ﻿using Multimedia.Web.Dtos;
+using Multimedia.Web.Exceptions;
 using Multimedia.Web.Services.Interfaces;
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using static Multimedia.Web.SD;
 
 namespace Multimedia.Web.Services
 {
@@ -18,9 +19,45 @@ namespace Multimedia.Web.Services
             _clientFactory = clientFactory;
         }
 
-        public Task<T> CreateImage<T>(CommandImageDto commandImageDto, Stream stream, string userId, string fileName, string token = null)
+        public async Task CreateImage(CommandImageDto commandImageDto, Stream stream, string fileName, string token = null)
         {
-            throw new System.NotImplementedException();
+            var client = httpClient.CreateClient("MultimediaAPI");
+            HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, "file");
+            message.RequestUri = new Uri(SD.ImagesAPIBase + $"/Image");
+            client.DefaultRequestHeaders.Clear();
+
+            using var content = new MultipartFormDataContent
+            {
+                { new StreamContent(stream), "ImageFile", fileName },
+                { new StringContent(commandImageDto.Title), "CommandImageDto.Title" },
+                { new StringContent(commandImageDto.Description), "CommandImageDto.Description" },
+                { new StringContent(commandImageDto.UserId.ToString()), "CommandImageDto.UserId" },
+                { new StringContent(commandImageDto.Hashtag), "CommandImageDto.Hashtag" }
+            };
+            message.Content = content;
+
+            if (!string.IsNullOrEmpty(token))
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage apiResponse = null;
+            apiResponse = await client.SendAsync(message);
+
+            if (apiResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                throw new NotFoundException(await apiResponse.Content.ReadAsStringAsync());
+            if (apiResponse.StatusCode == System.Net.HttpStatusCode.Conflict)
+                throw new ConflictException(await apiResponse.Content.ReadAsStringAsync());
+            if (apiResponse.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                throw new BadRequestException(await apiResponse.Content.ReadAsStringAsync());
+            if (apiResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                throw new UnauthorizedException(await apiResponse.Content.ReadAsStringAsync());
+            if (apiResponse.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                throw new Exception(await apiResponse.Content.ReadAsStringAsync());
+
+            var apiContent = await apiResponse.Content.ReadAsStringAsync();
+            var image = JsonConvert.DeserializeObject<ImageDto>(apiContent);
+
+            if (image == null)
+                throw new BadRequestException("Image was not created");
         }
 
         public async Task<T> DeleteImage<T>(int id, UserIdDto userIdDto, string token = null)
