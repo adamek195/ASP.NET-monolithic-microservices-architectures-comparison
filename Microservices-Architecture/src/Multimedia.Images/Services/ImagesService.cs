@@ -49,12 +49,12 @@ namespace Multimedia.Images.Services
             return _mapper.Map<List<ImageDto>>(images);
         }
 
-        public async Task<List<ImageDto>> GetUserImages(string userId)
+        public async Task<List<ImageDto>> GetUserImages(UserIdDto userIdDto)
         {
-            if (String.IsNullOrEmpty(userId))
-                throw new ArgumentNullException(nameof(userId));
+            if (String.IsNullOrEmpty(userIdDto.UserId))
+                throw new ArgumentNullException(nameof(userIdDto.UserId));
 
-            var images = await _imagesRepository.GetUserImages(Guid.Parse(userId));
+            var images = await _imagesRepository.GetUserImages(Guid.Parse(userIdDto.UserId));
 
             return _mapper.Map<List<ImageDto>>(images);
         }
@@ -90,17 +90,17 @@ namespace Multimedia.Images.Services
             await _imagesRepository.UpdateImage(id, imageToUpdate);
         }
 
-        public async Task DeleteImage(int id, UserIdDto userDto)
+        public async Task DeleteImage(int id, UserIdDto userIdDto)
         {
-            if (String.IsNullOrEmpty(userDto.UserId))
-                throw new ArgumentNullException(nameof(userDto.UserId));
+            if (String.IsNullOrEmpty(userIdDto.UserId))
+                throw new ArgumentNullException(nameof(userIdDto.UserId));
 
-            var imageToDelete = await _imagesRepository.GetUserImage(id, Guid.Parse(userDto.UserId));
+            var imageToDelete = await _imagesRepository.GetUserImage(id, Guid.Parse(userIdDto.UserId));
 
             if (imageToDelete == null)
                 throw new NotFoundException("Image with this id does not exist.");
 
-            await _imagesRepository.DeleteImage(id, Guid.Parse(userDto.UserId));
+            await _imagesRepository.DeleteImage(id, Guid.Parse(userIdDto.UserId));
         }
     }
 }

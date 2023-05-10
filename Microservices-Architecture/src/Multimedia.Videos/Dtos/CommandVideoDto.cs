@@ -12,7 +12,7 @@ namespace Multimedia.Videos.Dtos
 
         [Required(ErrorMessage = "User id is required.")]
         [StringLength(100, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 1)]
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
 
         [Required(ErrorMessage = "Description is required.")]
         [StringLength(100, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 1)]

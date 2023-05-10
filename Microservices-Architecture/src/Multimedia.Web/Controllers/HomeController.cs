@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Multimedia.Web.Exceptions.Filters;
 using Multimedia.Web.Services.Interfaces;
 using Multimedia.Web.Helpers;
+using Multimedia.Web.Services;
 
 namespace Multimedia.Web.Controllers
 {
@@ -17,10 +18,12 @@ namespace Multimedia.Web.Controllers
     public class HomeController : Controller
     {
         private readonly IImagesService _imagesService;
+        private readonly IVideosService _videosService;
 
-        public HomeController(IImagesService imagesService)
+        public HomeController(IImagesService imagesService, IVideosService videosService)
         {
             _imagesService = imagesService;
+            _videosService = videosService;
         }
 
         [HttpGet]
@@ -34,10 +37,15 @@ namespace Multimedia.Web.Controllers
             return View(imagesOnPage);
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Video(int? page)
         {
-            var images = new List<ImageDto>();
-            return View(images.ToPagedList(1, 9));
+            var videos = await _videosService.GetVideos<List<VideoDto>>(User.GetToken());
+
+            var pageNumber = page ?? 1;
+            var videosOnPage = videos.ToPagedList(pageNumber, 9);
+
+            return View(videosOnPage);
         }
 
         [HttpGet]

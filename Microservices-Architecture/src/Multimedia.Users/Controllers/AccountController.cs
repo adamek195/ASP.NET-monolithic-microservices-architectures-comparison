@@ -64,7 +64,7 @@ namespace Multimedia.Users.Controllers
         [HttpGet]
         [Route("User")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> User([FromBody]  UserIdDto userDto)
+        public async Task<IActionResult> User([FromBody] UserIdDto userDto)
         {
             var user = await _usersService.GetUserById(userDto);
 

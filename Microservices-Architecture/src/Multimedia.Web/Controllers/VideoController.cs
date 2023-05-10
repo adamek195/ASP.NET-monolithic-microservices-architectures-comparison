@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MonolithicMultimedia.Dtos;
-using MonolithicMultimedia.Helpers;
-using MonolithicMultimedia.Services.Interfaces;
 using System.Collections.Generic;
-using System;
 using System.Threading.Tasks;
+using System;
+using Multimedia.Web.Services.Interfaces;
+using Multimedia.Web.Exceptions.Filters;
+using Multimedia.Web.Dtos;
+using Multimedia.Web.Helpers;
 using X.PagedList;
-using MonolithicMultimedia.Exceptions.Filters;
 
-namespace MonolithicMultimedia.Controllers
+namespace Multimedia.Web.Controllers
 {
     [Authorize]
     [TypeFilter(typeof(GlobalExceptionFilter))]
@@ -38,7 +38,7 @@ namespace MonolithicMultimedia.Controllers
         [HttpGet]
         public async Task<IActionResult> GetVideo(int id)
         {
-            var videoDto = await _videosService.GetVideo(id);
+            var videoDto = await _videosService.GetVideo<ImageDto>(id, User.GetToken());
             byte[] videoBytes = System.IO.File.ReadAllBytes(videoDto.Path);
 
             return File(videoBytes, "video/mp4");
@@ -47,8 +47,8 @@ namespace MonolithicMultimedia.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var video = await _videosService.GetVideo(id);
-            var user = await _usersService.GetUserById(video.UserId.ToString());
+            var video = await _videosService.GetVideo<VideoDto>(id, User.GetToken());
+            var user = await _usersService.GetUserById<UserDto>(new UserIdDto { UserId = video.UserId.ToString() }, User.GetToken());
             ViewBag.UserName = user.FirstName + " " + user.LastName;
 
             ViewBag.Delete = false;
@@ -63,7 +63,7 @@ namespace MonolithicMultimedia.Controllers
         {
             var pageNumber = page ?? 1;
 
-            var videos = await _videosService.GetVideosByHashtag(hashtag);
+            var videos = await _videosService.GetVideosByHashtag<List<VideoDto>>(new HashtagDto { Hashtag = hashtag }, User.GetToken());
 
             var videosOnPage = videos.ToPagedList(pageNumber, 9);
 
@@ -73,12 +73,12 @@ namespace MonolithicMultimedia.Controllers
         [HttpGet]
         public async Task<IActionResult> Email(int? page, string email)
         {
-            ViewData["Email"] = email;
             var pageNumber = page ?? 1;
 
             if (!String.IsNullOrEmpty(email))
             {
-                var videos = await _videosService.GetVideosByEmail(email);
+                var user = await _usersService.GetUserByEmail<UserDto>(new UserEmailDto { Email = email }, User.GetToken());
+                var videos = await _videosService.GetUserVideos<List<VideoDto>>(new UserIdDto { UserId = user.Id.ToString() }, User.GetToken());
 
                 var videosOnPage = videos.ToPagedList(pageNumber, 9);
 
@@ -92,7 +92,7 @@ namespace MonolithicMultimedia.Controllers
         [HttpGet]
         public async Task<IActionResult> UserVideos(int? page)
         {
-            var videos = await _videosService.GetUserVideos(User.GetId());
+            var videos = await _videosService.GetUserVideos<List<VideoDto>>(new UserIdDto { UserId = User.GetId() }, User.GetToken());
 
             var pageNumber = page ?? 1;
             var videosOnPage = videos.ToPagedList(pageNumber, 9);
@@ -119,9 +119,11 @@ namespace MonolithicMultimedia.Controllers
                 return View();
             }
 
+            videoDto.UserId = User.GetId();
+
             using (var stream = videoFile.OpenReadStream())
             {
-                await _videosService.CreateVideo(videoDto, stream, User.GetId(), videoFile.FileName);
+                await _videosService.CreateVideo(videoDto, stream, videoFile.FileName, User.GetToken());
 
                 return RedirectToAction("Video", "Home");
             }
@@ -133,7 +135,9 @@ namespace MonolithicMultimedia.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            await _videosService.UpdateVideo(id, User.GetId(), videoDto);
+            videoDto.UserId = User.GetId();
+
+            await _videosService.UpdateVideo<Task>(id, videoDto, User.GetToken());
 
             return RedirectToAction("Details", new { Id = id });
         }
@@ -141,7 +145,7 @@ namespace MonolithicMultimedia.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            await _videosService.DeleteVideo(id, User.GetId());
+            await _videosService.DeleteVideo<Task>(id, new UserIdDto { UserId = User.GetId() }, User.GetToken());
 
             return RedirectToAction("Video", "Home");
         }

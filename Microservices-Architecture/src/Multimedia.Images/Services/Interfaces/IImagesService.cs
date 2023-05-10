@@ -14,12 +14,12 @@ namespace Multimedia.Images.Services.Interfaces
 
         Task<List<ImageDto>> GetImagesByHashtag(HashtagDto hashtagDto);
 
-        Task<List<ImageDto>> GetUserImages(string userId);
+        Task<List<ImageDto>> GetUserImages(UserIdDto userIdDto);
 
         Task<ImageDto> CreateImage(CommandImageDto commandImageDto, Stream stream, string fileName);
 
         Task UpdateImage(int id, CommandImageDto commandImageDto);
 
-        Task DeleteImage(int id, UserIdDto userDto);
+        Task DeleteImage(int id, UserIdDto userIdDto);
     }
 }

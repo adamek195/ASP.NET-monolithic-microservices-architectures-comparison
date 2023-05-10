@@ -47,7 +47,6 @@ namespace Multimedia.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Hashtag(int? page, string hashtag)
         {
-            ViewData["Hashtag"] = hashtag;
             var pageNumber = page ?? 1;
 
             var images = await _imagesService.GetImagesByHashtag<List<ImageDto>>(new HashtagDto { Hashtag = hashtag }, User.GetToken());
@@ -60,7 +59,6 @@ namespace Multimedia.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Email(int? page, string email)
         {
-            ViewData["Email"] = email;
             var pageNumber = page ?? 1;
 
             if (!String.IsNullOrEmpty(email))
@@ -122,7 +120,7 @@ namespace Multimedia.Web.Controllers
                 return View();
             }
 
-            imageDto.UserId = Guid.Parse(User.GetId());
+            imageDto.UserId = User.GetId();
 
             using (var stream = imageFile.OpenReadStream())
             {
@@ -138,7 +136,7 @@ namespace Multimedia.Web.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            imageDto.UserId = Guid.Parse(User.GetId());
+            imageDto.UserId = User.GetId();
 
             await _imagesService.UpdateImage<Task>(id, imageDto, User.GetToken());
 

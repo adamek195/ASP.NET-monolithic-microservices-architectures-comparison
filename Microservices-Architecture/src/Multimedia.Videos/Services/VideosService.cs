@@ -44,22 +44,25 @@ namespace Multimedia.Videos.Services
             return _mapper.Map<VideoDto>(video);
         }
 
-        public async Task DeleteVideo(int id, UserDto userDto)
+        public async Task DeleteVideo(int id, UserIdDto userIdDto)
         {
-            var videoToDelete = await _videosRepository.GetUserVideo(id, userDto.UserId);
+            if (String.IsNullOrEmpty(userIdDto.UserId))
+                throw new ArgumentNullException(nameof(userIdDto.UserId));
+
+            var videoToDelete = await _videosRepository.GetUserVideo(id, Guid.Parse(userIdDto.UserId));
 
             if (videoToDelete == null)
                 throw new NotFoundException("Video with this id does not exist.");
 
-            await _videosRepository.DeleteVideo(id, userDto.UserId);
+            await _videosRepository.DeleteVideo(id, Guid.Parse(userIdDto.UserId));
         }
 
-        public async Task<List<VideoDto>> GetUserVideos(string userId)
+        public async Task<List<VideoDto>> GetUserVideos(UserIdDto userIdDto)
         {
-            if (String.IsNullOrEmpty(userId))
-                throw new ArgumentNullException(nameof(userId));
+            if (String.IsNullOrEmpty(userIdDto.UserId))
+                throw new ArgumentNullException(nameof(userIdDto.UserId));
 
-            var videos = await _videosRepository.GetUserVideos(Guid.Parse(userId));
+            var videos = await _videosRepository.GetUserVideos(Guid.Parse(userIdDto.UserId));
 
             return _mapper.Map<List<VideoDto>>(videos);
         }
@@ -81,16 +84,16 @@ namespace Multimedia.Videos.Services
             return _mapper.Map<List<VideoDto>>(videos);
         }
 
-        public async Task<List<VideoDto>> GetVideosByHashtag(string hashtag)
+        public async Task<List<VideoDto>> GetVideosByHashtag(HashtagDto hashtagDto)
         {
-            var videos = await _videosRepository.GetVideosByHashtag(hashtag);
+            var videos = await _videosRepository.GetVideosByHashtag(hashtagDto.Hashtag);
 
             return _mapper.Map<List<VideoDto>>(videos);
         }
 
         public async Task UpdateVideo(int id, CommandVideoDto commandVideoDto)
         {
-            var videoToUpdate = await _videosRepository.GetUserVideo(id, commandVideoDto.UserId);
+            var videoToUpdate = await _videosRepository.GetUserVideo(id, Guid.Parse(commandVideoDto.UserId));
 
             if (videoToUpdate == null)
                 throw new NotFoundException("Video with this id does not exist.");

@@ -23,11 +23,14 @@ namespace Multimedia.Web
         {
             services.AddHttpClient<IUsersService, UsersService>();
             services.AddHttpClient<IImagesService, ImagesService>();
+            services.AddHttpClient<IVideosService, VideosService>();
             SD.UsersAPIBase = Configuration["ServiceUrls:UsersAPI"];
             SD.ImagesAPIBase = Configuration["ServiceUrls:ImagesAPI"];
+            SD.VideosAPIBase = Configuration["ServiceUrls:VideosAPI"];
 
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IImagesService, ImagesService>();
+            services.AddTransient<IVideosService, VideosService>();
 
             services.AddMvc(options =>
             {

@@ -30,9 +30,17 @@ namespace Multimedia.Images.Controllers
             return Ok(images);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetImage([FromRoute] int id)
+        {
+            var image = await _imagesService.GetImage(id);
+
+            return Ok(image);
+        }
+
         [HttpGet]
         [Route("Hashtag")]
-        public async Task<IActionResult> GetImagesByHashtag(HashtagDto hashtagDto)
+        public async Task<IActionResult> GetImagesByHashtag([FromBody] HashtagDto hashtagDto)
         {
             var images = await _imagesService.GetImagesByHashtag(hashtagDto);
 
@@ -41,19 +49,11 @@ namespace Multimedia.Images.Controllers
 
         [HttpGet]
         [Route("User")]
-        public async Task<IActionResult> GetUserImages(UserIdDto userIdDto)
+        public async Task<IActionResult> GetUserImages([FromBody] UserIdDto userIdDto)
         {
-            var images = await _imagesService.GetUserImages(userIdDto.UserId);
+            var images = await _imagesService.GetUserImages(userIdDto);
 
             return Ok(images);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetImage([FromRoute] int id)
-        {
-            var image = await _imagesService.GetImage(id);
-
-            return Ok(image);
         }
 
         [HttpPost]

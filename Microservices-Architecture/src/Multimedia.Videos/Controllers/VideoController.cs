@@ -13,11 +13,11 @@ namespace Multimedia.Videos.Controllers
     [Route("[controller]")]
     [GlobalExceptionFilter]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class VideosController : ControllerBase
+    public class VideoController : ControllerBase
     {
         private readonly IVideosService _videosService;
 
-        public VideosController(IVideosService videosService)
+        public VideoController(IVideosService videosService)
         {
             _videosService = videosService;
         }
@@ -38,20 +38,36 @@ namespace Multimedia.Videos.Controllers
             return Ok(video);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateVideo([FromForm] CommandVideoDto commandVideoDto, [FromForm] IFormFile videoFile)
+        [HttpGet]
+        [Route("Hashtag")]
+        public async Task<IActionResult> GetVideosByHashtag(HashtagDto hashtagDto)
         {
-            if (videoFile == null || videoFile.Length == 0)
+            var images = await _videosService.GetVideosByHashtag(hashtagDto);
+
+            return Ok(images);
+        }
+
+        [HttpGet]
+        [Route("User")]
+        public async Task<IActionResult> GetUserImages(UserIdDto userIdDto)
+        {
+            var videos = await _videosService.GetUserVideos(userIdDto);
+
+            return Ok(videos);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateVideo([FromForm] CommandVideoFileDto commandVideoFileDto)
+        {
+            if (commandVideoFileDto.VideoFile == null || commandVideoFileDto.VideoFile.Length == 0)
                 return BadRequest("You do not upload video.");
 
+            if (commandVideoFileDto.CommandVideoDto == null)
+                return BadRequest("You do not upload video information.");
 
-            if (videoFile.ContentType.ToLower() != "video/mp4" &&
-                videoFile.ContentType.ToLower() != "video/mkv")
-                return BadRequest("You do not upload photo.");
-
-            using (var stream = videoFile.OpenReadStream())
+            using (var stream = commandVideoFileDto.VideoFile.OpenReadStream())
             {
-                var videoDto = await _videosService.CreateVideo(commandVideoDto, stream, videoFile.FileName);
+                var videoDto = await _videosService.CreateVideo(commandVideoFileDto.CommandVideoDto, stream, commandVideoFileDto.VideoFile.FileName);
 
                 return Created($"videos/{videoDto.Id}", videoDto);
             }
@@ -59,15 +75,15 @@ namespace Multimedia.Videos.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteVideo([FromRoute] int id, [FromForm] UserDto userDto)
+        public async Task<IActionResult> DeleteVideo([FromRoute] int id, [FromBody] UserIdDto userIdDto)
         {
-            await _videosService.DeleteVideo(id, userDto);
+            await _videosService.DeleteVideo(id, userIdDto);
 
             return NoContent();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVideo([FromRoute] int id, [FromForm] CommandVideoDto commandVideoDto)
+        public async Task<IActionResult> UpdateVideo([FromRoute] int id, [FromBody] CommandVideoDto commandVideoDto)
         {
             await _videosService.UpdateVideo(id, commandVideoDto);
 
