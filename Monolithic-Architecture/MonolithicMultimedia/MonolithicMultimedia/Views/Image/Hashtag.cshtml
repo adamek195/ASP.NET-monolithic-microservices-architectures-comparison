@@ -13,8 +13,11 @@
 <form class="col-lg-6 offset-lg-3 ">
     <div class="row justify-content-center">
         <p>
-            <input type="search" placeholder="Enter image hashtag ..." value="@ViewData["Hashtag"]" name="Hashtag" style="width:500px" />
-            <input type="submit" value="Search" class="btn btn-primary" />
+            @using (Html.BeginForm("Images", "Hashtag", FormMethod.Get))
+            {
+                <input type="text" name="Hashtag" placeholder="Enter image hashtag ..." style="width:500px" />
+                <input type="submit" value="Search" class="btn btn-primary" />
+            }
         </p>
     </div>
 </form>
@@ -44,7 +47,7 @@
 </br >
 <div class="row">
     <div class="col-md-12">
-        @Html.PagedListPager((IPagedList) Model, page => Url.Action("Hashtag", new {page = page}),
+        @Html.PagedListPager((IPagedList) Model, page => Url.Action("Hashtag", new {page = page, hashtag = ViewContext.HttpContext.Request.Query["hashtag"]}),
         new X.PagedList.Web.Common.PagedListRenderOptions {
         LiElementClasses = new string[] {"page-item"},
         PageClasses = new string[] { "page-link" }

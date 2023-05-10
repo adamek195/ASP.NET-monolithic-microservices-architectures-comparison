@@ -47,7 +47,6 @@ namespace MonolithicMultimedia.Controllers
         [HttpGet]
         public async Task<IActionResult> Hashtag(int? page, string hashtag)
         {
-            ViewData["Hashtag"] = hashtag;
             var pageNumber = page ?? 1;
 
             var images = await _imagesService.GetImagesByHashtag(hashtag);
@@ -60,7 +59,6 @@ namespace MonolithicMultimedia.Controllers
         [HttpGet]
         public async Task<IActionResult> Email(int? page, string email)
         {
-            ViewData["Email"] = email;
             var pageNumber = page ?? 1;
 
             if (!String.IsNullOrEmpty(email))

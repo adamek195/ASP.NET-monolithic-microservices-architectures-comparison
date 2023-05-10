@@ -61,7 +61,6 @@ namespace MonolithicMultimedia.Controllers
         [HttpGet]
         public async Task<IActionResult> Hashtag(int? page, string hashtag)
         {
-            ViewData["Hashtag"] = hashtag;
             var pageNumber = page ?? 1;
 
             var videos = await _videosService.GetVideosByHashtag(hashtag);

@@ -13,8 +13,11 @@
 <form class="col-lg-6 offset-lg-3 ">
     <div class="row justify-content-center">
         <p>
-            <input type="search" placeholder="Enter user email ..." value="@ViewData["Email"]" name="Email" style="width:500px" />
-            <input type="submit" value="Search" class="btn btn-primary" />
+            @using (Html.BeginForm("Videos", "Email", FormMethod.Get))
+            {
+                <input type="search" name="Email" placeholder="Enter user email ..." style="width:500px" />
+                <input type="submit" value="Search" class="btn btn-primary" />
+            }
         </p>
     </div>
 </form>
@@ -46,7 +49,7 @@
 </br >
 <div class="row">
     <div class="col-md-12">
-        @Html.PagedListPager((IPagedList) Model, page => Url.Action("Video", new {page = page}),
+        @Html.PagedListPager((IPagedList) Model, page => Url.Action("Video", new {page = page, email = ViewContext.HttpContext.Request.Query["email"]}),
         new X.PagedList.Web.Common.PagedListRenderOptions {
         LiElementClasses = new string[] {"page-item"},
         PageClasses = new string[] { "page-link" }
