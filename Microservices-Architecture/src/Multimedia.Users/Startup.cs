@@ -30,7 +30,7 @@ namespace Multimedia.Users
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<UsersMultimediaContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("UsersMultimediaCS")));
+                options.UseSqlServer(Configuration.GetConnectionString("UsersMultimediaDockerCS")));
 
             services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<UsersMultimediaContext>();
@@ -73,6 +73,8 @@ namespace Multimedia.Users
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            DataBaseMigrator.AddMigration(app);
 
             app.UseHttpsRedirection();
 

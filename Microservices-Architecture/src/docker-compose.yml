@@ -1,0 +1,42 @@
+version: '3.4'
+services:
+  ms-sql-server:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "P@ssw0rd"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+  multimedia-users-api:
+    build:
+      context: .
+      dockerfile: Multimedia.Users/Dockerfile
+    environment:
+     - ConnectionStrings__UsersMultimediaDockerCS=Server=ms-sql-server;Database=UsersMultimediaDB;User Id=SA;Password=P@ssw0rd;TrustServerCertificate=True;
+     - JwtToken__TokenIssuer=MultimediaImageApi
+     - JwtToken__Key=THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING
+    ports:
+      - "8080:80"
+  multimedia-images-api:
+    build:
+      context: .
+      dockerfile: Multimedia.Images/Dockerfile
+    environment:
+     - ConnectionStrings__ImagesMultimediaDockerCS=Server=ms-sql-server;Database=ImagesMultimediaDB;User Id=SA;Password=P@ssw0rd;TrustServerCertificate=True;
+     - JwtToken__TokenIssuer=MultimediaImageApi
+     - JwtToken__Key=THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING
+     - MediaRepositorySettings__ImagePath=C:\\Users\\adamb\\OneDrive\\Dokumenty\\Studia\\Praca_Magisterska\\App\\Repository\\Image
+    ports:
+      - "8081:80"
+  multimedia-videos-api:
+    build:
+      context: .
+      dockerfile: Multimedia.Videos/Dockerfile
+    environment:
+     - ConnectionStrings__VideosMultimediaDockerCS=Server=ms-sql-server;Database=VideosMultimediaDB;User Id=SA;Password=P@ssw0rd;TrustServerCertificate=True;
+     - JwtToken__TokenIssuer=MultimediaVideoApi
+     - JwtToken__Key=THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING
+     - MediaRepositorySettings__VideoPath=C:\\Users\\adamb\\OneDrive\\Dokumenty\\Studia\\Praca_Magisterska\\App\\Repository\\Video
+    ports:
+      - "8082:80"

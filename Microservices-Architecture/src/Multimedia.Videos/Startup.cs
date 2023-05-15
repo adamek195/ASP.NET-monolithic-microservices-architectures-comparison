@@ -30,7 +30,7 @@ namespace Multimedia.Videos
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<VideosMultimediaContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("VideosMultimediaCS")));
+                options.UseSqlServer(Configuration.GetConnectionString("VideosMultimediaDockerCS")));
 
             var mediaRepositorySettings = new MediaRepositorySettings();
             Configuration.GetSection("MediaRepositorySettings").Bind(mediaRepositorySettings);
@@ -74,6 +74,8 @@ namespace Multimedia.Videos
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            DataBaseMigrator.AddMigration(app);
 
             app.UseHttpsRedirection();
 
