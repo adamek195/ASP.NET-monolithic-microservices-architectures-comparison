@@ -15,10 +15,10 @@ namespace Multimedia.Images.Services
     public class ImagesService : IImagesService
     {
         private readonly IImagesRepository _imagesRepository;
-        private readonly MediaRepositorySettings _mediaRepositorySettings;
+        private readonly DockerMediaRepositorySettings _mediaRepositorySettings;
         private readonly IMapper _mapper;
 
-        public ImagesService(IImagesRepository imagesRepository, MediaRepositorySettings mediaRepositorySettings, IMapper mapper)
+        public ImagesService(IImagesRepository imagesRepository, DockerMediaRepositorySettings mediaRepositorySettings, IMapper mapper)
         {
             _imagesRepository = imagesRepository;
             _mediaRepositorySettings = mediaRepositorySettings;
@@ -64,7 +64,7 @@ namespace Multimedia.Images.Services
             var imageToAdd = _mapper.Map<Image>(commandImageDto);
             imageToAdd.CreationDate = DateTime.Now;
 
-            var resourcePath = _mediaRepositorySettings.ImagePath + '\\' + commandImageDto.UserId + '\\' + fileName;
+            var resourcePath = _mediaRepositorySettings.DockerImagePath + '/' + commandImageDto.UserId + '/' + fileName;
             imageToAdd.Path = resourcePath;
             var directoryPath = Path.GetDirectoryName(resourcePath);
             if (!Directory.Exists(directoryPath))

@@ -15,10 +15,10 @@ namespace Multimedia.Videos.Services
     public class VideosService : IVideosService
     {
         private readonly IVideosRepository _videosRepository;
-        private readonly MediaRepositorySettings _mediaRepositorySettings;
+        private readonly DockerMediaRepositorySettings _mediaRepositorySettings;
         private readonly IMapper _mapper;
 
-        public VideosService(IVideosRepository videosRepository, MediaRepositorySettings mediaRepositorySettings, IMapper mapper)
+        public VideosService(IVideosRepository videosRepository, DockerMediaRepositorySettings mediaRepositorySettings, IMapper mapper)
         {
             _videosRepository = videosRepository;
             _mediaRepositorySettings = mediaRepositorySettings;
@@ -30,7 +30,7 @@ namespace Multimedia.Videos.Services
             var videoToAdd = _mapper.Map<Video>(commandVideoDto);
             videoToAdd.CreationDate = DateTime.Now;
 
-            var resourcePath = _mediaRepositorySettings.VideoPath + '\\' + commandVideoDto.UserId + '\\' + fileName;
+            var resourcePath = _mediaRepositorySettings.DockerVideoPath + '/' + commandVideoDto.UserId + '/' + fileName;
             videoToAdd.Path = resourcePath;
             var directoryPath = Path.GetDirectoryName(resourcePath);
             if (!Directory.Exists(directoryPath))

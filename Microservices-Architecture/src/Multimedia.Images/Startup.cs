@@ -32,8 +32,8 @@ namespace Multimedia.Images
             services.AddDbContext<ImagesMultimediaContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ImagesMultimediaDockerCS")));
 
-            var mediaRepositorySettings = new MediaRepositorySettings();
-            Configuration.GetSection("MediaRepositorySettings").Bind(mediaRepositorySettings);
+            var mediaRepositorySettings = new DockerMediaRepositorySettings();
+            Configuration.GetSection("DockerMediaRepositorySettings").Bind(mediaRepositorySettings);
             services.AddTransient(x => mediaRepositorySettings);
 
             services.AddTransient<IImagesService, ImagesService>();
