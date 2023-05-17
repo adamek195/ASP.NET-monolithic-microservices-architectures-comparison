@@ -26,7 +26,8 @@ bin/
 obj/
 TestResults/
 .vs/
-Repository/
+Repository_Images/
+Repository_Videos/
 ###################
 # Web publish log #
 ###################
