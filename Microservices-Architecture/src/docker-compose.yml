@@ -30,8 +30,9 @@ services:
      - ConnectionStrings__ImagesMultimediaDockerCS=Server=ms-sql-server,1433;Initial Catalog=ImagesMultimediaDB;User ID=SA;Password=P@ssw0rd;TrustServerCertificate=true;Encrypt=False;
      - JwtToken__TokenIssuer=MultimediaImagesApi
      - JwtToken__Key=THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING
+     - DockerMediaRepositorySettings__DockerImagePath=/app/Repository/Image
     volumes:
-      - ./Repository_Images:/app/Repository_Images
+      - "./Repository/Image:/app/Repository/Image"
     ports:
       - "8081:80"
   multimedia-videos-api:
@@ -44,7 +45,8 @@ services:
       - ConnectionStrings__VideosMultimediaDockerCS=Server=ms-sql-server,1433;Initial Catalog=VideosMultimediaDB;User ID=SA;Password=P@ssw0rd;TrustServerCertificate=true;Encrypt=False;
       - JwtToken__TokenIssuer=MultimediaVideosApi
       - JwtToken__Key=THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING
+      - DockerMediaRepositorySettings__DockerVideoPath=/app/Repository/Video
     volumes:
-      - ./Repository_Videos:/app/Repository_Videos
+      - "./Repository/Video:/app/Repository/Video"
     ports:
       - "8082:80"
