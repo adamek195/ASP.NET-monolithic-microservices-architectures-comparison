@@ -1,13 +1,21 @@
 version: '3.4'
+
+networks:
+  backend:
+
 services:
+
   ms-sql-server:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "P@ssw0rd"
       MSSQL_PID: Express
+    networks:
+      - backend
     ports:
       - "1433:1433"
+
   multimedia-users-api:
     build:
       context: .
@@ -16,10 +24,11 @@ services:
       - ms-sql-server
     environment:
       - ConnectionStrings__UsersMultimediaDockerCS=Server=ms-sql-server,1433;Initial Catalog=UsersMultimediaDB;User ID=SA;Password=P@ssw0rd;TrustServerCertificate=true;Encrypt=False;
-      - JwtToken__TokenIssuer=MultimediaUsersApi
       - JwtToken__Key=THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING
-    ports:
-      - "8080:80"
+      - JwtToken__TokenLifeTime=30
+    networks:
+      - backend
+
   multimedia-images-api:
     build:
       context: .
@@ -28,13 +37,13 @@ services:
      - ms-sql-server
     environment:
      - ConnectionStrings__ImagesMultimediaDockerCS=Server=ms-sql-server,1433;Initial Catalog=ImagesMultimediaDB;User ID=SA;Password=P@ssw0rd;TrustServerCertificate=true;Encrypt=False;
-     - JwtToken__TokenIssuer=MultimediaImagesApi
      - JwtToken__Key=THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING
      - DockerMediaRepositorySettings__DockerImagePath=/app/Repository/Image
     volumes:
       - "./Repository/Image:/app/Repository/Image"
-    ports:
-      - "8081:80"
+    networks:
+      - backend
+
   multimedia-videos-api:
     build:
       context: .
@@ -43,10 +52,18 @@ services:
       - ms-sql-server
     environment:
       - ConnectionStrings__VideosMultimediaDockerCS=Server=ms-sql-server,1433;Initial Catalog=VideosMultimediaDB;User ID=SA;Password=P@ssw0rd;TrustServerCertificate=true;Encrypt=False;
-      - JwtToken__TokenIssuer=MultimediaVideosApi
       - JwtToken__Key=THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING
       - DockerMediaRepositorySettings__DockerVideoPath=/app/Repository/Video
     volumes:
       - "./Repository/Video:/app/Repository/Video"
+    networks:
+      - backend
+
+  multimedia-gateway-api:
+    build:
+      context: .
+      dockerfile: Multimedia.ApiGateway/Dockerfile
     ports:
-      - "8082:80"
+      - 8080:80
+    networks:
+      - backend

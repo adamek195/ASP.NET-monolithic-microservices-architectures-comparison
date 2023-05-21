@@ -60,7 +60,6 @@ namespace Multimedia.Users
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
                         ValidateIssuer = false,
-                        ValidIssuer = Configuration["JwtToken:TokenIssuer"],
                         ValidateAudience = false,
                         RequireExpirationTime = true
                     };

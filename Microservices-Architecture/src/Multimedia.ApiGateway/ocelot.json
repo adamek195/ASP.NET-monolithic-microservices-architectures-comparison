@@ -1,0 +1,151 @@
+{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/Image",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "multimedia-images-api",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Image"
+    },
+    {
+      "UpstreamPathTemplate": "/Image/{id}",
+      "UpstreamHttpMethod": [ "Get", "Delete", "Put" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "multimedia-images-api",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Image/{id}"
+    },
+    {
+      "UpstreamPathTemplate": "/Image/User",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "multimedia-images-api",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Image/User"
+    },
+    {
+      "UpstreamPathTemplate": "/Image/Hashtag",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "multimedia-images-api",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Image/Hashtag"
+    },
+    {
+      "UpstreamPathTemplate": "/Video",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "multimedia-videos-api",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Video"
+    },
+    {
+      "UpstreamPathTemplate": "/Video/{id}",
+      "UpstreamHttpMethod": [ "Get", "Delete", "Put" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "multimedia-videos-api",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Video/{id}"
+    },
+    {
+      "UpstreamPathTemplate": "/Video/User",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "multimedia-videos-api",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Video/User"
+    },
+    {
+      "UpstreamPathTemplate": "/Video/Hashtag",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "multimedia-videos-api",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Video/Hashtag"
+    },
+    {
+      "UpstreamPathTemplate": "/Account/Register",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "multimedia-users-api",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Account/Register"
+    },
+    {
+      "UpstreamPathTemplate": "/Account/Authenticate",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "multimedia-users-api",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Account/Authenticate"
+    },
+    {
+      "UpstreamPathTemplate": "/Account/Email",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "multimedia-users-api",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Account/Email"
+    },
+    {
+      "UpstreamPathTemplate": "/Account/User",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "multimedia-users-api",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/Account/User"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:8080"
+  }
+}

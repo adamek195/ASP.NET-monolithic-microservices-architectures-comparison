@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multimedia.Users", "Multime
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multimedia.Images", "Multimedia.Images\Multimedia.Images.csproj", "{24ECC11A-569E-40F1-879C-C8E0EADCF6EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Multimedia.Videos", "Multimedia.Videos\Multimedia.Videos.csproj", "{6AD3D10C-A8F4-4EBD-B270-FE2974B21CFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multimedia.Videos", "Multimedia.Videos\Multimedia.Videos.csproj", "{6AD3D10C-A8F4-4EBD-B270-FE2974B21CFA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Multimedia.ApiGateway", "Multimedia.ApiGateway\Multimedia.ApiGateway.csproj", "{CEA04AEF-59A3-46B2-9462-B098F8E610D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6AD3D10C-A8F4-4EBD-B270-FE2974B21CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AD3D10C-A8F4-4EBD-B270-FE2974B21CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AD3D10C-A8F4-4EBD-B270-FE2974B21CFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEA04AEF-59A3-46B2-9462-B098F8E610D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEA04AEF-59A3-46B2-9462-B098F8E610D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEA04AEF-59A3-46B2-9462-B098F8E610D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEA04AEF-59A3-46B2-9462-B098F8E610D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
