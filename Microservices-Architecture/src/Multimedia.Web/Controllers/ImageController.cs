@@ -9,6 +9,7 @@ using System;
 using Multimedia.Web.Services.Interfaces;
 using Multimedia.Web.Dtos;
 using X.PagedList;
+using Multimedia.Web.Settings;
 
 namespace Multimedia.Web.Controllers
 {
@@ -18,11 +19,13 @@ namespace Multimedia.Web.Controllers
     {
         private readonly IImagesService _imagesService;
         private readonly IUsersService _usersService;
+        private readonly RepositorySettings _repositorySettings;
 
-        public ImageController(IImagesService imagesService, IUsersService usersService)
+        public ImageController(IImagesService imagesService, IUsersService usersService, RepositorySettings repositorySettings)
         {
             _imagesService = imagesService;
             _usersService = usersService;
+            _repositorySettings = repositorySettings;
         }
 
         public IActionResult Create()
@@ -39,7 +42,10 @@ namespace Multimedia.Web.Controllers
         public async Task<IActionResult> GetImage(int id)
         {
             var imageDto = await _imagesService.GetImage<ImageDto>(id, User.GetToken());
-            byte[] imageBytes = System.IO.File.ReadAllBytes(imageDto.Path);
+            var path = imageDto.Path.Remove(0, 15);
+            path = path.Replace("/", "\\");
+            path = _repositorySettings.RepositoryPath + path;
+            byte[] imageBytes = System.IO.File.ReadAllBytes(path);
 
             return File(imageBytes, "image/jpeg");
         }

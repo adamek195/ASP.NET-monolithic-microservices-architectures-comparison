@@ -9,6 +9,7 @@ using Multimedia.Web.Exceptions.Filters;
 using Multimedia.Web.Dtos;
 using Multimedia.Web.Helpers;
 using X.PagedList;
+using Multimedia.Web.Settings;
 
 namespace Multimedia.Web.Controllers
 {
@@ -18,11 +19,13 @@ namespace Multimedia.Web.Controllers
     {
         private readonly IVideosService _videosService;
         private readonly IUsersService _usersService;
+        private readonly RepositorySettings _repositorySettings;
 
-        public VideoController(IVideosService videosService, IUsersService usersService)
+        public VideoController(IVideosService videosService, IUsersService usersService, RepositorySettings repositorySettings)
         {
             _videosService = videosService;
             _usersService = usersService;
+            _repositorySettings = repositorySettings;
         }
 
         public IActionResult Create()
@@ -39,7 +42,10 @@ namespace Multimedia.Web.Controllers
         public async Task<IActionResult> GetVideo(int id)
         {
             var videoDto = await _videosService.GetVideo<ImageDto>(id, User.GetToken());
-            byte[] videoBytes = System.IO.File.ReadAllBytes(videoDto.Path);
+            var path = videoDto.Path.Remove(0, 15);
+            path = path.Replace("/", "\\");
+            path = _repositorySettings.RepositoryPath + path;
+            byte[] videoBytes = System.IO.File.ReadAllBytes(path);
 
             return File(videoBytes, "video/mp4");
         }

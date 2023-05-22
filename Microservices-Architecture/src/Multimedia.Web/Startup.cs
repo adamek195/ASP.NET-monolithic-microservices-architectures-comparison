@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Multimedia.Web.Exceptions.Filters;
 using Multimedia.Web.Services;
 using Multimedia.Web.Services.Interfaces;
+using Multimedia.Web.Settings;
 
 namespace Multimedia.Web
 {
@@ -24,13 +25,15 @@ namespace Multimedia.Web
             services.AddHttpClient<IUsersService, UsersService>();
             services.AddHttpClient<IImagesService, ImagesService>();
             services.AddHttpClient<IVideosService, VideosService>();
-            SD.UsersAPIBase = Configuration["ServiceUrls:UsersAPI"];
-            SD.ImagesAPIBase = Configuration["ServiceUrls:ImagesAPI"];
-            SD.VideosAPIBase = Configuration["ServiceUrls:VideosAPI"];
+            SD.APIBase = Configuration["ServiceUrls:API"];
 
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IImagesService, ImagesService>();
             services.AddTransient<IVideosService, VideosService>();
+
+            var repositorySettings = new RepositorySettings();
+            Configuration.GetSection("RepositorySettings").Bind(repositorySettings);
+            services.AddTransient(x => repositorySettings);
 
             services.AddMvc(options =>
             {

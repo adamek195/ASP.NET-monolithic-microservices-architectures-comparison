@@ -23,7 +23,7 @@ namespace Multimedia.Web.Services
         {
             var client = httpClient.CreateClient("MultimediaAPI");
             HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, "file");
-            message.RequestUri = new Uri(SD.ImagesAPIBase + $"/Image");
+            message.RequestUri = new Uri(SD.APIBase + $"/Image");
             client.DefaultRequestHeaders.Clear();
 
             using var content = new MultipartFormDataContent
@@ -65,7 +65,7 @@ namespace Multimedia.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.DELETE,
-                Url = SD.ImagesAPIBase + $"/Image/{id}",
+                Url = SD.APIBase + $"/Image/{id}",
                 Data = userIdDto,
                 AccessToken = token
             });
@@ -76,7 +76,7 @@ namespace Multimedia.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ImagesAPIBase + $"/Image/{id}",
+                Url = SD.APIBase + $"/Image/{id}",
                 AccessToken = token
             });
         }
@@ -86,7 +86,7 @@ namespace Multimedia.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ImagesAPIBase + "/Image",
+                Url = SD.APIBase + "/Image",
                 AccessToken = token
             });
         }
@@ -96,7 +96,7 @@ namespace Multimedia.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ImagesAPIBase + $"/Image/Hashtag",
+                Url = SD.APIBase + $"/Image/Hashtag",
                 Data = hashtagDto,
                 AccessToken = token
             });
@@ -107,7 +107,7 @@ namespace Multimedia.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ImagesAPIBase + "/Image/User",
+                Url = SD.APIBase + "/Image/User",
                 Data = userIdDto,
                 AccessToken = token
             });
@@ -118,7 +118,7 @@ namespace Multimedia.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.PUT,
-                Url = SD.ImagesAPIBase + $"/Image/{id}",
+                Url = SD.APIBase + $"/Image/{id}",
                 Data = commandImageDto,
                 AccessToken = token
             });

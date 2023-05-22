@@ -20,7 +20,7 @@ namespace Multimedia.Web.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = newUserDto,
-                Url = SD.UsersAPIBase + "/Account/Register",
+                Url = SD.APIBase + "/Account/Register",
                 AccessToken = token
             });
         }
@@ -31,7 +31,7 @@ namespace Multimedia.Web.Services
             {
                 ApiType = SD.ApiType.GET,
                 Data = userIdDto,
-                Url = SD.UsersAPIBase + "/Account/User",
+                Url = SD.APIBase + "/Account/User",
                 AccessToken = token
             });
         }
@@ -42,7 +42,7 @@ namespace Multimedia.Web.Services
             {
                 ApiType = SD.ApiType.GET,
                 Data = emailDto,
-                Url = SD.UsersAPIBase + "/Account/Email",
+                Url = SD.APIBase + "/Account/Email",
                 AccessToken = token
             });
         }
@@ -53,7 +53,7 @@ namespace Multimedia.Web.Services
             {
                 ApiType = SD.ApiType.POST,
                 Data = loginUserDto,
-                Url = SD.UsersAPIBase + "/Account/Authenticate",
+                Url = SD.APIBase + "/Account/Authenticate",
                 AccessToken = token
             });
         }

@@ -23,7 +23,7 @@ namespace Multimedia.Web.Services
         {
             var client = httpClient.CreateClient("MultimediaAPI");
             HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, "file");
-            message.RequestUri = new Uri(SD.VideosAPIBase + $"/Video");
+            message.RequestUri = new Uri(SD.APIBase + $"/Video");
             client.DefaultRequestHeaders.Clear();
 
             using var content = new MultipartFormDataContent
@@ -65,7 +65,7 @@ namespace Multimedia.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.DELETE,
-                Url = SD.VideosAPIBase + $"/Video/{id}",
+                Url = SD.APIBase + $"/Video/{id}",
                 Data = userIdDto,
                 AccessToken = token
             });
@@ -76,7 +76,7 @@ namespace Multimedia.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.VideosAPIBase + $"/Video/{id}",
+                Url = SD.APIBase + $"/Video/{id}",
                 AccessToken = token
             });
         }
@@ -86,7 +86,7 @@ namespace Multimedia.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.VideosAPIBase + "/Video",
+                Url = SD.APIBase + "/Video",
                 AccessToken = token
             });
         }
@@ -96,7 +96,7 @@ namespace Multimedia.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.VideosAPIBase + "/Video",
+                Url = SD.APIBase + "/Video",
                 AccessToken = token
             });
         }
@@ -106,7 +106,7 @@ namespace Multimedia.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.VideosAPIBase + $"/Video/Hashtag",
+                Url = SD.APIBase + $"/Video/Hashtag",
                 Data = hashtagDto,
                 AccessToken = token
             });
@@ -117,7 +117,7 @@ namespace Multimedia.Web.Services
             return await this.SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.PUT,
-                Url = SD.VideosAPIBase + $"/Video/{id}",
+                Url = SD.APIBase + $"/Video/{id}",
                 Data = commandVideoDto,
                 AccessToken = token
             });
