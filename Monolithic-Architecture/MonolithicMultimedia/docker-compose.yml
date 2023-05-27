@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  ms-sql-server:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "P@ssw0rd"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+  multimedia-monolithic:
+    build:
+      context: .
+      dockerfile: MonolithicMultimedia/Dockerfile
+    depends_on:
+      - ms-sql-server
+    environment:
+      - ConnectionStrings__MonolithicMultimediaCS=Server=ms-sql-server,1433;Initial Catalog=MonolithicMultimediaDB;User ID=SA;Password=P@ssw0rd;TrustServerCertificate=true;Encrypt=False;
+      - DockerMediaRepositorySettings__ImagePath=/app/Repository/Image
+      - DockerMediaRepositorySettings__VideoPath=/app/Repository/Video
+    volumes:
+      - "./Repository/Image:/app/Repository/Image"
+      - "./Repository/Video:/app/Repository/Video"
+    ports:
+      - "8080:80"

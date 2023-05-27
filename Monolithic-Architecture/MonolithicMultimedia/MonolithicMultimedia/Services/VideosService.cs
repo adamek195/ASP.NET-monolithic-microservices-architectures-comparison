@@ -2,7 +2,6 @@
 using MonolithicMultimedia.Dtos;
 using MonolithicMultimedia.Entities;
 using MonolithicMultimedia.Exceptions;
-using MonolithicMultimedia.Repositories;
 using MonolithicMultimedia.Repositories.Interfaces;
 using MonolithicMultimedia.Services.Interfaces;
 using MonolithicMultimedia.Settings;
@@ -17,10 +16,10 @@ namespace MonolithicMultimedia.Services
     {
         private readonly IVideosRepository _videosRepository;
         private readonly IUsersRepository _usersRepository;
-        private readonly MediaRepositorySettings _mediaRepositorySettings;
+        private readonly DockerMediaRepositorySettings _mediaRepositorySettings;
         private readonly IMapper _mapper;
 
-        public VideosService(IVideosRepository videosRepository, IUsersRepository usersRepository, MediaRepositorySettings mediaRepositorySettings, IMapper mapper)
+        public VideosService(IVideosRepository videosRepository, IUsersRepository usersRepository, DockerMediaRepositorySettings mediaRepositorySettings, IMapper mapper)
         {
             _videosRepository = videosRepository;
             _usersRepository = usersRepository;
@@ -34,7 +33,7 @@ namespace MonolithicMultimedia.Services
             videoToAdd.CreationDate = DateTime.Now;
             videoToAdd.UserId = Guid.Parse(userId);
 
-            var resourcePath = _mediaRepositorySettings.VideoPath + '\\' + userId + '\\' + fileName;
+            var resourcePath = _mediaRepositorySettings.VideoPath + '/' + userId + '/' + fileName;
             videoToAdd.Path = resourcePath;
             var directoryPath = Path.GetDirectoryName(resourcePath);
             if (!Directory.Exists(directoryPath))

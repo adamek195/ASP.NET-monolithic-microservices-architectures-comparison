@@ -16,10 +16,10 @@ namespace MonolithicMultimedia.Services
     {
         private readonly IImagesRepository _imagesRepository;
         private readonly IUsersRepository _usersRepository;
-        private readonly MediaRepositorySettings _mediaRepositorySettings;
+        private readonly DockerMediaRepositorySettings _mediaRepositorySettings;
         private readonly IMapper _mapper;
 
-        public ImagesService(IImagesRepository imagesRepository, IUsersRepository usersRepository, MediaRepositorySettings mediaRepositorySettings, IMapper mapper)
+        public ImagesService(IImagesRepository imagesRepository, IUsersRepository usersRepository, DockerMediaRepositorySettings mediaRepositorySettings, IMapper mapper)
         {
             _imagesRepository = imagesRepository;
             _usersRepository = usersRepository;
@@ -82,7 +82,7 @@ namespace MonolithicMultimedia.Services
             imageToAdd.CreationDate = DateTime.Now;
             imageToAdd.UserId = Guid.Parse(userId);
 
-            var resourcePath = _mediaRepositorySettings.ImagePath + '\\' + userId + '\\' + fileName;
+            var resourcePath = _mediaRepositorySettings.ImagePath + '/' + userId + '/' + fileName;
             imageToAdd.Path = resourcePath;
             var directoryPath = Path.GetDirectoryName(resourcePath);
             if (!Directory.Exists(directoryPath))

@@ -35,9 +35,9 @@ namespace MonolithicMultimedia
             services.AddIdentityCore<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<MonolithicMultimediaContext>();
 
-            var mediaRepositorySettings = new MediaRepositorySettings();
-            Configuration.GetSection("MediaRepositorySettings").Bind(mediaRepositorySettings);
-            services.AddTransient(x => mediaRepositorySettings);
+            var dockerMediaRepositorySettings = new DockerMediaRepositorySettings();
+            Configuration.GetSection("DockerMediaRepositorySettings").Bind(dockerMediaRepositorySettings);
+            services.AddTransient(x => dockerMediaRepositorySettings);
 
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IUsersRepository, UsersRepository>();
@@ -75,6 +75,9 @@ namespace MonolithicMultimedia
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            DataBaseMigrator.AddMigration(app);
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

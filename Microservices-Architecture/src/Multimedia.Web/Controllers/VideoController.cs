@@ -41,7 +41,7 @@ namespace Multimedia.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetVideo(int id)
         {
-            var videoDto = await _videosService.GetVideo<ImageDto>(id, User.GetToken());
+            var videoDto = await _videosService.GetVideo<VideoDto>(id, User.GetToken());
             var path = videoDto.Path.Remove(0, 15);
             path = path.Replace("/", "\\");
             path = _repositorySettings.RepositoryPath + path;

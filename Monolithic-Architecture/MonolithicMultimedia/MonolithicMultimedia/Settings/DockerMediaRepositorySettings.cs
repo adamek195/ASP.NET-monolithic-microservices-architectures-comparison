@@ -1,6 +1,6 @@
 ﻿namespace MonolithicMultimedia.Settings
 {
-    public class MediaRepositorySettings
+    public class DockerMediaRepositorySettings
     {
         public string ImagePath { get; set; }
 
