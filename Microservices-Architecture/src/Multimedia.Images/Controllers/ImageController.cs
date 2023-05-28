@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Multimedia.Images.Dtos;
 using Multimedia.Images.Exceptions.Filters;
@@ -55,7 +56,7 @@ namespace Multimedia.Images.Controllers
             return Ok(images);
         }
 
-        [HttpPost]
+[HttpPost]
         public async Task<IActionResult> CreateImage([FromForm] CommandImageFileDto commandImageFileDto)
         {
             if (commandImageFileDto.ImageFile == null || commandImageFileDto.ImageFile.Length == 0)

@@ -47,7 +47,7 @@ namespace Multimedia.Web
                 .AddCookie(option =>
                 {
                     option.LoginPath = "/Account/Login";
-                    option.ExpireTimeSpan = System.TimeSpan.FromMinutes(20);
+                    option.ExpireTimeSpan = System.TimeSpan.FromMinutes(60);
                 });
         }
 

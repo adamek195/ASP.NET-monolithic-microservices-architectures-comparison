@@ -40,7 +40,7 @@ namespace MonolithicMultimedia.Controllers
             ViewBag.UserName = newUser.FirstName + " " + newUser.LastName;
             ViewBag.Email = newUser.Email;
             ViewBag.UserRegister = "Registration was successful!";
-            
+
             return View("Registered");
         }
 
