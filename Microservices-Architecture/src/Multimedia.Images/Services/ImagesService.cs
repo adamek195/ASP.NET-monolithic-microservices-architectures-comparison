@@ -59,12 +59,12 @@ namespace Multimedia.Images.Services
             return _mapper.Map<List<ImageDto>>(images);
         }
 
-        public async Task<ImageDto> CreateImage(CommandImageDto commandImageDto, Stream stream, string fileName)
+        public async Task<ImageDto> CreateImage(CommandImageDto commandImageDto, Stream stream, string extension)
         {
             var imageToAdd = _mapper.Map<Image>(commandImageDto);
             imageToAdd.CreationDate = DateTime.Now;
 
-            var resourcePath = _mediaRepositorySettings.DockerImagePath + '/' + commandImageDto.UserId + '/' + fileName;
+            var resourcePath = _mediaRepositorySettings.DockerImagePath + '/' + commandImageDto.UserId + '/' + Guid.NewGuid() + extension;
             imageToAdd.Path = resourcePath;
             var directoryPath = Path.GetDirectoryName(resourcePath);
             if (!Directory.Exists(directoryPath))

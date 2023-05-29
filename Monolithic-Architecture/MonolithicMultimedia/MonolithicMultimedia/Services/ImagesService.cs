@@ -76,13 +76,13 @@ namespace MonolithicMultimedia.Services
             return _mapper.Map<List<ImageDto>>(images);
         }
 
-        public async Task CreateImage(CommandImageDto commandImageDto, Stream stream, string userId, string fileName)
+        public async Task CreateImage(CommandImageDto commandImageDto, Stream stream, string userId, string extension)
         {
             var imageToAdd = _mapper.Map<Image>(commandImageDto);
             imageToAdd.CreationDate = DateTime.Now;
             imageToAdd.UserId = Guid.Parse(userId);
 
-            var resourcePath = _mediaRepositorySettings.ImagePath + '/' + userId + '/' + fileName;
+            var resourcePath = _mediaRepositorySettings.ImagePath + '/' + userId + '/' + Guid.NewGuid() + extension;
             imageToAdd.Path = resourcePath;
             var directoryPath = Path.GetDirectoryName(resourcePath);
             if (!Directory.Exists(directoryPath))

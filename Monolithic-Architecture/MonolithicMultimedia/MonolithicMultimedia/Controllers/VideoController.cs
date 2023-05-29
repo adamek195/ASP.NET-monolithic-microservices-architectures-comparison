@@ -121,7 +121,7 @@ namespace MonolithicMultimedia.Controllers
 
             using (var stream = videoFile.OpenReadStream())
             {
-                await _videosService.CreateVideo(videoDto, stream, User.GetId(), videoFile.FileName);
+                await _videosService.CreateVideo(videoDto, stream, User.GetId(), System.IO.Path.GetExtension(videoFile.FileName));
 
                 return RedirectToAction("Video", "Home");
             }

@@ -25,12 +25,12 @@ namespace Multimedia.Videos.Services
             _mapper = mapper;
         }
 
-        public async Task<VideoDto> CreateVideo(CommandVideoDto commandVideoDto, Stream stream, string fileName)
+        public async Task<VideoDto> CreateVideo(CommandVideoDto commandVideoDto, Stream stream, string extension)
         {
             var videoToAdd = _mapper.Map<Video>(commandVideoDto);
             videoToAdd.CreationDate = DateTime.Now;
 
-            var resourcePath = _mediaRepositorySettings.DockerVideoPath + '/' + commandVideoDto.UserId + '/' + fileName;
+            var resourcePath = _mediaRepositorySettings.DockerVideoPath + '/' + commandVideoDto.UserId + '/' + Guid.NewGuid() + extension;
             videoToAdd.Path = resourcePath;
             var directoryPath = Path.GetDirectoryName(resourcePath);
             if (!Directory.Exists(directoryPath))

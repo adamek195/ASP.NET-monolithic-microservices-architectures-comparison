@@ -67,7 +67,7 @@ namespace Multimedia.Images.Controllers
 
             using (var stream = commandImageFileDto.ImageFile.OpenReadStream())
             {
-                var imageDto = await _imagesService.CreateImage(commandImageFileDto.CommandImageDto, stream, commandImageFileDto.ImageFile.FileName);
+                var imageDto = await _imagesService.CreateImage(commandImageFileDto.CommandImageDto, stream, System.IO.Path.GetExtension(commandImageFileDto.ImageFile.FileName));
 
                 return Created($"images/{imageDto.Id}", imageDto);
             }

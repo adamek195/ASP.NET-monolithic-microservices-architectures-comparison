@@ -18,7 +18,7 @@ namespace MonolithicMultimedia.Services.Interfaces
 
         Task<List<ImageDto>> GetImagesByEmail(string email);
 
-        Task CreateImage(CommandImageDto commandImageDto, Stream stream, string userId, string fileName);
+        Task CreateImage(CommandImageDto commandImageDto, Stream stream, string userId, string extension);
 
         Task UpdateImage(int id, string userId, CommandImageDto commandImageDto);
 

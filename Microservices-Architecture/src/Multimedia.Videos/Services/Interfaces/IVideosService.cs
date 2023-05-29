@@ -15,7 +15,7 @@ namespace Multimedia.Videos.Services.Interfaces
 
         Task<List<VideoDto>> GetUserVideos(UserIdDto userIdDto);
 
-        Task<VideoDto> CreateVideo(CommandVideoDto commandVideoDto, Stream stream, string fileName);
+        Task<VideoDto> CreateVideo(CommandVideoDto commandVideoDto, Stream stream, string extension);
 
         Task UpdateVideo(int id,  CommandVideoDto commandVideoDto);
 

@@ -27,13 +27,13 @@ namespace MonolithicMultimedia.Services
             _mapper = mapper;
         }
 
-        public async Task CreateVideo(CommandVideoDto commandVideoDto, Stream stream, string userId, string fileName)
+        public async Task CreateVideo(CommandVideoDto commandVideoDto, Stream stream, string userId, string extension)
         {
             var videoToAdd = _mapper.Map<Video>(commandVideoDto);
             videoToAdd.CreationDate = DateTime.Now;
             videoToAdd.UserId = Guid.Parse(userId);
 
-            var resourcePath = _mediaRepositorySettings.VideoPath + '/' + userId + '/' + fileName;
+            var resourcePath = _mediaRepositorySettings.VideoPath + '/' + userId + '/' + Guid.NewGuid() + extension;
             videoToAdd.Path = resourcePath;
             var directoryPath = Path.GetDirectoryName(resourcePath);
             if (!Directory.Exists(directoryPath))

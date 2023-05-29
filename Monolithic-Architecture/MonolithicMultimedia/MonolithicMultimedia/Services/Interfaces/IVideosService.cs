@@ -17,7 +17,7 @@ namespace MonolithicMultimedia.Services.Interfaces
 
         Task<List<VideoDto>> GetVideosByEmail(string email);
 
-        Task CreateVideo(CommandVideoDto commandVideoDto, Stream stream, string userId, string fileName);
+        Task CreateVideo(CommandVideoDto commandVideoDto, Stream stream, string userId, string extension);
 
         Task UpdateVideo(int id, string userId, CommandVideoDto commandVideoDto);
 

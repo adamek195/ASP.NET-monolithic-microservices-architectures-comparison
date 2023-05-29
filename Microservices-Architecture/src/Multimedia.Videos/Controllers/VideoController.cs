@@ -67,7 +67,7 @@ namespace Multimedia.Videos.Controllers
 
             using (var stream = commandVideoFileDto.VideoFile.OpenReadStream())
             {
-                var videoDto = await _videosService.CreateVideo(commandVideoFileDto.CommandVideoDto, stream, commandVideoFileDto.VideoFile.FileName);
+                var videoDto = await _videosService.CreateVideo(commandVideoFileDto.CommandVideoDto, stream, System.IO.Path.GetExtension(commandVideoFileDto.VideoFile.FileName));
 
                 return Created($"videos/{videoDto.Id}", videoDto);
             }

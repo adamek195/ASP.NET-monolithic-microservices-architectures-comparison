@@ -121,7 +121,7 @@ namespace MonolithicMultimedia.Controllers
 
             using (var stream = imageFile.OpenReadStream())
             {
-                await _imagesService.CreateImage(imageDto, stream, User.GetId(), imageFile.FileName);
+                await _imagesService.CreateImage(imageDto, stream, User.GetId(), System.IO.Path.GetExtension(imageFile.FileName));
 
                 return RedirectToAction("Index", "Home");
             }

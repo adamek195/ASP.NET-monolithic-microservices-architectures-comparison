@@ -16,7 +16,7 @@ namespace Multimedia.Images.Services.Interfaces
 
         Task<List<ImageDto>> GetUserImages(UserIdDto userIdDto);
 
-        Task<ImageDto> CreateImage(CommandImageDto commandImageDto, Stream stream, string fileName);
+        Task<ImageDto> CreateImage(CommandImageDto commandImageDto, Stream stream, string extension);
 
         Task UpdateImage(int id, CommandImageDto commandImageDto);
 
